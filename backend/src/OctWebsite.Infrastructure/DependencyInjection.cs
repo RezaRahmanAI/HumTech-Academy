@@ -24,6 +24,7 @@ public static class DependencyInjection
         services.AddScoped<IBlogRepository, EfBlogRepository>();
         services.AddScoped<ISettingsRepository, EfSettingsRepository>();
         services.AddScoped<ILeadRepository, EfLeadRepository>();
+        services.AddScoped<IPageContentRepository, EfPageContentRepository>();
 
         return services;
     }

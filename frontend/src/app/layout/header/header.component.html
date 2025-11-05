@@ -21,7 +21,7 @@
 
       <div class="hidden items-center gap-8 lg:flex">
         <ul class="flex items-center gap-6 text-sm font-medium text-slate-600">
-          <li *ngFor="let link of navLinks">
+          <li *ngFor="let link of navLinks()">
             <a
               [routerLink]="link.path"
               routerLinkActive="text-primary"
@@ -71,7 +71,7 @@
     <div class="container-wide pb-6">
       <div class="rounded-3xl border border-slate-100 bg-white/95 p-6 shadow-glow">
         <ul class="flex flex-col gap-4 text-base font-medium text-slate-700">
-          <li *ngFor="let link of navLinks">
+          <li *ngFor="let link of navLinks()">
             <a
               [routerLink]="link.path"
               routerLinkActive="text-primary"

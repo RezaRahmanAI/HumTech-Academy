@@ -1,0 +1,23 @@
+{
+  "header": {
+    "eyebrow": "Contact",
+    "title": "Partner with Hum Tech & Academy",
+    "subtitle": "Share your goals and we will prepare a tailored action plan, timeline, and resourcing model."
+  },
+  "consultationOptions": "Schedule a discovery call, request a proposal, or invite us to an RFP.",
+  "regionalSupport": "Dhaka · Singapore · Dubai · London · Toronto",
+  "emails": [
+    "hello@humtech.academy",
+    "courses@humtech.academy",
+    "support@humtech.academy"
+  ],
+  "formOptions": [
+    "Digital Marketing",
+    "Software Development",
+    "Website Building",
+    "Hum Academy Programs",
+    "General Inquiry"
+  ],
+  "ndaLabel": "I would like to sign an NDA prior to sharing sensitive information.",
+  "responseTime": "We respond within 24 business hours. For urgent queries, call +880 1234-567890."
+}

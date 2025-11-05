@@ -1,4 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using OctWebsite.Domain.Entities;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.IO;
 
 namespace OctWebsite.Infrastructure.Data;
 
@@ -14,6 +18,7 @@ public sealed class ApplicationDbInitializer(ApplicationDbContext context)
         await SeedCollectionAsync(context.ProductItems, SeedData.Products, cancellationToken);
         await SeedCollectionAsync(context.AcademyTracks, SeedData.AcademyTracks, cancellationToken);
         await SeedCollectionAsync(context.BlogPosts, SeedData.BlogPosts, cancellationToken);
+        await SeedPageContentAsync(context, cancellationToken);
 
         if (!await context.SiteSettings.AnyAsync(cancellationToken))
         {
@@ -32,5 +37,36 @@ public sealed class ApplicationDbInitializer(ApplicationDbContext context)
         }
 
         await set.AddRangeAsync(data, cancellationToken);
+    }
+
+    private static async Task SeedPageContentAsync(ApplicationDbContext context, CancellationToken cancellationToken)
+    {
+        if (await context.PageContents.AnyAsync(cancellationToken))
+        {
+            return;
+        }
+
+        var basePath = Path.Combine(AppContext.BaseDirectory, "Data", "PageContentDefaults");
+        if (!Directory.Exists(basePath))
+        {
+            return;
+        }
+
+        var files = Directory.EnumerateFiles(basePath, "*.json");
+        foreach (var file in files)
+        {
+            try
+            {
+                var json = await File.ReadAllTextAsync(file, cancellationToken);
+                JsonNode.Parse(json); // validate json
+                var key = Path.GetFileNameWithoutExtension(file);
+                var content = new PageContent(Guid.NewGuid(), key, json);
+                await context.PageContents.AddAsync(content, cancellationToken);
+            }
+            catch (Exception)
+            {
+                // Ignore invalid JSON files to avoid seeding errors.
+            }
+        }
     }
 }

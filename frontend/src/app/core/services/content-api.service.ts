@@ -2,18 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { HomeContent } from '../models/home-content.model';
-
 @Injectable({ providedIn: 'root' })
 export class ContentApiService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = '/api';
 
-  getHomeContent(): Observable<HomeContent> {
-    return this.http.get<HomeContent>(`${this.baseUrl}/home-content`);
+  getPageContent<T>(pageKey: string): Observable<T> {
+    return this.http.get<T>(`${this.baseUrl}/content/${pageKey}`);
   }
 
-  updateHomeContent(content: HomeContent): Observable<void> {
-    return this.http.put<void>(`${this.baseUrl}/home-content`, content);
+  savePageContent<T>(pageKey: string, content: T): Observable<T> {
+    return this.http.put<T>(`${this.baseUrl}/content/${pageKey}`, content);
   }
 }

@@ -192,6 +192,27 @@ namespace OctWebsite.Infrastructure.Migrations
                     b.ToTable("ProductItems", (string)null);
                 });
 
+            modelBuilder.Entity("OctWebsite.Domain.Entities.PageContent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PageKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PageKey")
+                        .IsUnique();
+
+                    b.ToTable("PageContents", (string)null);
+                });
+
             modelBuilder.Entity("OctWebsite.Domain.Entities.ServiceItem", b =>
                 {
                     b.Property<Guid>("Id")

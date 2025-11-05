@@ -14,7 +14,7 @@
         </p>
         <div class="mt-6 flex flex-wrap items-center gap-3">
           <a
-            *ngFor="let social of socialLinks"
+            *ngFor="let social of socialLinks()"
             [href]="social.url"
             target="_blank"
             rel="noopener"

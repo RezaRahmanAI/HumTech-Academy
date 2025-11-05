@@ -1,10 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostListener, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, computed, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { PageContentService } from '../../core/services/page-content.service';
 
 interface NavLink {
   label: string;
   path: string;
+}
+
+interface NavigationContent {
+  links: NavLink[];
 }
 
 @Component({
@@ -16,16 +21,16 @@ interface NavLink {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
+  private readonly pageContent = inject(PageContentService);
+
   protected readonly menuOpen = signal(false);
   protected readonly scrolled = signal(false);
-  protected readonly navLinks: NavLink[] = [
-    { label: 'Services', path: '/services' },
-    { label: 'Academy', path: '/academy' },
-    { label: 'Portfolio', path: '/portfolio' },
-    { label: 'About', path: '/about' },
-    { label: 'Contact', path: '/contact' },
-    { label: 'Dashboard', path: '/dashboard' }
-  ];
+  private readonly navigation = this.pageContent.getPageSignal<NavigationContent>('navigation');
+  protected readonly navLinks = computed(() => this.navigation()?.links ?? []);
+
+  constructor() {
+    this.pageContent.loadPage<NavigationContent>('navigation').subscribe();
+  }
 
   @HostListener('window:scroll')
   onScroll(): void {

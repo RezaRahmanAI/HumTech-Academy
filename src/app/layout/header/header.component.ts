@@ -23,7 +23,8 @@ export class HeaderComponent {
     { label: 'Academy', path: '/academy' },
     { label: 'Portfolio', path: '/portfolio' },
     { label: 'About', path: '/about' },
-    { label: 'Contact', path: '/contact' }
+    { label: 'Contact', path: '/contact' },
+    { label: 'Dashboard', path: '/dashboard' }
   ];
 
   @HostListener('window:scroll')

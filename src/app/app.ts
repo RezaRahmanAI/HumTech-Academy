@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, AfterViewInit, inject } from '@angu
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
-import { ScrollService } from './core/services/scroll.service';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +12,7 @@ import { ScrollService } from './core/services/scroll.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class App implements AfterViewInit {
-  private readonly scrollService = inject(ScrollService);
 
   ngAfterViewInit(): void {
-    this.scrollService.init();
   }
 }

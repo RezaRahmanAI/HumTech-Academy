@@ -13,6 +13,7 @@ import { ContentApiService } from './content-api.service';
 @Injectable({ providedIn: 'root' })
 export class ContentService {
   private readonly storageKey = 'hum-tech-academy-home-content';
+  private readonly pageKey = 'home';
   private readonly api = inject(ContentApiService);
 
   private readonly initialHomeContent: HomeContent = {
@@ -488,7 +489,7 @@ export class ContentService {
 
   private syncFromApi(): void {
     this.api
-      .getHomeContent()
+      .getPageContent<HomeContent>(this.pageKey)
       .pipe(take(1))
       .subscribe({
         next: (content) => {
@@ -497,6 +498,13 @@ export class ContentService {
           this.persistHomeContent(next);
         },
         error: (error) => {
+          if (error.status === 404) {
+            const fallback = this.clone(this.initialHomeContent);
+            this._homeContent.set(fallback);
+            this.persistHomeContent(fallback);
+            this.pushContentToApi(fallback);
+            return;
+          }
           console.error('Failed to load home content from API', error);
         }
       });
@@ -504,7 +512,7 @@ export class ContentService {
 
   private pushContentToApi(content: HomeContent): void {
     this.api
-      .updateHomeContent(content)
+      .savePageContent(this.pageKey, content)
       .pipe(take(1))
       .subscribe({
         error: (error) => {

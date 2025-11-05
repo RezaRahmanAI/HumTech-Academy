@@ -18,6 +18,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<BlogPost> BlogPosts => Set<BlogPost>();
     public DbSet<SiteSettings> SiteSettings => Set<SiteSettings>();
     public DbSet<Lead> Leads => Set<Lead>();
+    public DbSet<PageContent> PageContents => Set<PageContent>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -115,6 +116,14 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
             entity.ToTable("Leads");
             entity.HasKey(lead => lead.Id);
             entity.Property(lead => lead.Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<PageContent>(entity =>
+        {
+            entity.ToTable("PageContents");
+            entity.HasKey(content => content.Id);
+            entity.Property(content => content.Id).ValueGeneratedNever();
+            entity.HasIndex(content => content.PageKey).IsUnique();
         });
     }
 }

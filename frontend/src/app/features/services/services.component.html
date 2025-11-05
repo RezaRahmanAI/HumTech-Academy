@@ -1,12 +1,12 @@
 <section class="section-padding bg-white">
   <div class="container-wide">
     <app-section-header
-      eyebrow="Services"
-      title="A Full Spectrum of Technology & Growth Solutions"
-      subtitle="From discovery to deployment and enablement, our multidisciplinary teams deliver resilient products and measurable marketing outcomes."
+      [eyebrow]="header()?.eyebrow ?? 'Services'"
+      [title]="header()?.title ?? 'Services'"
+      [subtitle]="header()?.subtitle ?? ''"
     ></app-section-header>
     <div class="mt-12 space-y-10">
-      <article *ngFor="let category of categories" class="rounded-3xl border border-slate-100 bg-white p-10 shadow-glow" appScrollReveal>
+      <article *ngFor="let category of categories()" class="rounded-3xl border border-slate-100 bg-white p-10 shadow-glow" appScrollReveal>
         <h2 class="text-3xl font-semibold text-primary">{{ category.name }}</h2>
         <p class="mt-4 text-base text-slate-600">{{ category.description }}</p>
         <div class="mt-8 grid gap-6 md:grid-cols-2">

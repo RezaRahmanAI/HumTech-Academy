@@ -1,0 +1,28 @@
+{
+  "socialLinks": [
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/company/humtechacademy"
+    },
+    {
+      "label": "Facebook",
+      "url": "https://www.facebook.com/humtechacademy"
+    },
+    {
+      "label": "Twitter",
+      "url": "https://twitter.com/humtechacademy"
+    },
+    {
+      "label": "Instagram",
+      "url": "https://www.instagram.com/humtechacademy"
+    },
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/@humtechacademy"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/humtechacademy"
+    }
+  ]
+}

@@ -931,6 +931,824 @@
           </div>
         </div>
       </details>
+
+      <details id="page-services" class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+        <summary class="cursor-pointer text-lg font-semibold text-primary">Services Page</summary>
+        <div *ngIf="servicesDraft as services; else servicesLoading" class="mt-6 space-y-6">
+          <div class="grid gap-4 md:grid-cols-3">
+            <label class="form-label">
+              <span class="text-sm font-semibold text-primary">Eyebrow</span>
+              <input class="form-input" [(ngModel)]="services.header.eyebrow" name="servicesHeaderEyebrow" />
+            </label>
+            <label class="form-label md:col-span-2">
+              <span class="text-sm font-semibold text-primary">Title</span>
+              <input class="form-input" [(ngModel)]="services.header.title" name="servicesHeaderTitle" />
+            </label>
+          </div>
+          <label class="form-label block">
+            <span class="text-sm font-semibold text-primary">Subtitle</span>
+            <textarea
+              class="form-input"
+              rows="2"
+              [(ngModel)]="services.header.subtitle"
+              name="servicesHeaderSubtitle"
+            ></textarea>
+          </label>
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-primary">Service Categories</h3>
+              <button type="button" class="text-sm font-semibold text-primary" (click)="addServicesCategory()">
+                Add category
+              </button>
+            </div>
+            <div class="mt-4 space-y-4">
+              <div
+                *ngFor="let category of services.categories; let i = index"
+                class="space-y-4 rounded-3xl border border-slate-200 bg-white/60 p-4 shadow-sm"
+              >
+                <div class="grid gap-4 md:grid-cols-2">
+                  <label class="form-label">
+                    <span class="text-xs font-semibold text-primary uppercase">Name</span>
+                    <input class="form-input" [(ngModel)]="category.name" [name]="'servicesCategoryName' + i" />
+                  </label>
+                  <label class="form-label md:col-span-2">
+                    <span class="text-xs font-semibold text-primary uppercase">Description</span>
+                    <textarea
+                      class="form-input"
+                      rows="2"
+                      [(ngModel)]="category.description"
+                      [name]="'servicesCategoryDescription' + i"
+                    ></textarea>
+                  </label>
+                </div>
+                <div>
+                  <div class="flex items-center justify-between">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Deliverables</h4>
+                    <button
+                      type="button"
+                      class="text-xs font-semibold text-primary"
+                      (click)="addServicesDeliverable(category)"
+                    >
+                      Add deliverable
+                    </button>
+                  </div>
+                  <div class="mt-3 space-y-3">
+                    <div *ngFor="let deliverable of category.deliverables; let j = index" class="flex items-center gap-3">
+                      <input
+                        class="form-input flex-1"
+                        [(ngModel)]="category.deliverables[j]"
+                        [name]="'servicesDeliverable' + i + '-' + j"
+                      />
+                      <button
+                        type="button"
+                        class="text-xs text-red-500"
+                        (click)="removeServicesDeliverable(category, j)"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex items-center justify-between">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Outcomes</h4>
+                    <button type="button" class="text-xs font-semibold text-primary" (click)="addServicesOutcome(category)">
+                      Add outcome
+                    </button>
+                  </div>
+                  <div class="mt-3 space-y-3">
+                    <div *ngFor="let outcome of category.outcomes; let j = index" class="flex items-center gap-3">
+                      <input
+                        class="form-input flex-1"
+                        [(ngModel)]="category.outcomes[j]"
+                        [name]="'servicesOutcome' + i + '-' + j"
+                      />
+                      <button type="button" class="text-xs text-red-500" (click)="removeServicesOutcome(category, j)">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="text-xs font-semibold text-red-500" (click)="removeServicesCategory(i)">
+                  Remove category
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary"
+              (click)="resetServicesContent()"
+            >
+              Reset Changes
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-primary/20 transition hover:-translate-y-0.5"
+              (click)="saveServicesContent()"
+            >
+              Save Services Page
+            </button>
+          </div>
+        </div>
+        <ng-template #servicesLoading>
+          <p class="mt-6 text-sm text-slate-500">Loading services page content...</p>
+        </ng-template>
+      </details>
+
+      <details id="page-academy" class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+        <summary class="cursor-pointer text-lg font-semibold text-primary">Academy Page</summary>
+        <div *ngIf="academyDraft as academy; else academyLoading" class="mt-6 space-y-6">
+          <div class="grid gap-4 md:grid-cols-3">
+            <label class="form-label">
+              <span class="text-sm font-semibold text-primary">Eyebrow</span>
+              <input class="form-input" [(ngModel)]="academy.header.eyebrow" name="academyHeaderEyebrow" />
+            </label>
+            <label class="form-label md:col-span-2">
+              <span class="text-sm font-semibold text-primary">Title</span>
+              <input class="form-input" [(ngModel)]="academy.header.title" name="academyHeaderTitle" />
+            </label>
+          </div>
+          <label class="form-label block">
+            <span class="text-sm font-semibold text-primary">Subtitle</span>
+            <textarea
+              class="form-input"
+              rows="2"
+              [(ngModel)]="academy.header.subtitle"
+              name="academyHeaderSubtitle"
+            ></textarea>
+          </label>
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-primary">Learning Tracks</h3>
+              <button type="button" class="text-sm font-semibold text-primary" (click)="addAcademyTrack()">
+                Add track
+              </button>
+            </div>
+            <div class="mt-4 space-y-4">
+              <div
+                *ngFor="let track of academy.tracks; let i = index"
+                class="space-y-4 rounded-3xl border border-slate-200 bg-white/60 p-4 shadow-sm"
+              >
+                <div class="grid gap-4 md:grid-cols-2">
+                  <label class="form-label">
+                    <span class="text-xs font-semibold text-primary uppercase">Title</span>
+                    <input class="form-input" [(ngModel)]="track.title" [name]="'academyTrackTitle' + i" />
+                  </label>
+                  <label class="form-label md:col-span-2">
+                    <span class="text-xs font-semibold text-primary uppercase">Description</span>
+                    <textarea
+                      class="form-input"
+                      rows="2"
+                      [(ngModel)]="track.description"
+                      [name]="'academyTrackDescription' + i"
+                    ></textarea>
+                  </label>
+                </div>
+                <div>
+                  <div class="flex items-center justify-between">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Modules</h4>
+                    <button type="button" class="text-xs font-semibold text-primary" (click)="addTrackModule(track)">
+                      Add module
+                    </button>
+                  </div>
+                  <div class="mt-3 space-y-3">
+                    <div *ngFor="let module of track.modules; let j = index" class="flex items-center gap-3">
+                      <input
+                        class="form-input flex-1"
+                        [(ngModel)]="track.modules[j]"
+                        [name]="'academyTrackModule' + i + '-' + j"
+                      />
+                      <button type="button" class="text-xs text-red-500" (click)="removeTrackModule(track, j)">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex items-center justify-between">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Outcomes</h4>
+                    <button type="button" class="text-xs font-semibold text-primary" (click)="addTrackOutcome(track)">
+                      Add outcome
+                    </button>
+                  </div>
+                  <div class="mt-3 space-y-3">
+                    <div *ngFor="let outcome of track.outcomes; let j = index" class="flex items-center gap-3">
+                      <input
+                        class="form-input flex-1"
+                        [(ngModel)]="track.outcomes[j]"
+                        [name]="'academyTrackOutcome' + i + '-' + j"
+                      />
+                      <button type="button" class="text-xs text-red-500" (click)="removeTrackOutcome(track, j)">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="text-xs font-semibold text-red-500" (click)="removeAcademyTrack(i)">
+                  Remove track
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary"
+              (click)="resetAcademyContent()"
+            >
+              Reset Changes
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-primary/20 transition hover:-translate-y-0.5"
+              (click)="saveAcademyContent()"
+            >
+              Save Academy Page
+            </button>
+          </div>
+        </div>
+        <ng-template #academyLoading>
+          <p class="mt-6 text-sm text-slate-500">Loading academy page content...</p>
+        </ng-template>
+      </details>
+
+      <details id="page-portfolio" class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+        <summary class="cursor-pointer text-lg font-semibold text-primary">Portfolio Page</summary>
+        <div *ngIf="portfolioDraft as portfolio; else portfolioLoading" class="mt-6 space-y-6">
+          <div class="grid gap-4 md:grid-cols-3">
+            <label class="form-label">
+              <span class="text-sm font-semibold text-primary">Eyebrow</span>
+              <input class="form-input" [(ngModel)]="portfolio.header.eyebrow" name="portfolioHeaderEyebrow" />
+            </label>
+            <label class="form-label md:col-span-2">
+              <span class="text-sm font-semibold text-primary">Title</span>
+              <input class="form-input" [(ngModel)]="portfolio.header.title" name="portfolioHeaderTitle" />
+            </label>
+          </div>
+          <label class="form-label block">
+            <span class="text-sm font-semibold text-primary">Subtitle</span>
+            <textarea
+              class="form-input"
+              rows="2"
+              [(ngModel)]="portfolio.header.subtitle"
+              name="portfolioHeaderSubtitle"
+            ></textarea>
+          </label>
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-primary">Case Studies</h3>
+              <button type="button" class="text-sm font-semibold text-primary" (click)="addPortfolioWork()">
+                Add project
+              </button>
+            </div>
+            <div class="mt-4 space-y-4">
+              <div
+                *ngFor="let item of portfolio.work; let i = index"
+                class="space-y-4 rounded-3xl border border-slate-200 bg-white/60 p-4 shadow-sm"
+              >
+                <div class="grid gap-4 md:grid-cols-3">
+                  <label class="form-label">
+                    <span class="text-xs font-semibold text-primary uppercase">Title</span>
+                    <input class="form-input" [(ngModel)]="item.title" [name]="'portfolioTitle' + i" />
+                  </label>
+                  <label class="form-label">
+                    <span class="text-xs font-semibold text-primary uppercase">Client</span>
+                    <input class="form-input" [(ngModel)]="item.client" [name]="'portfolioClient' + i" />
+                  </label>
+                  <label class="form-label">
+                    <span class="text-xs font-semibold text-primary uppercase">Region</span>
+                    <input class="form-input" [(ngModel)]="item.region" [name]="'portfolioRegion' + i" />
+                  </label>
+                </div>
+                <label class="form-label block">
+                  <span class="text-xs font-semibold text-primary uppercase">Summary</span>
+                  <textarea
+                    class="form-input"
+                    rows="2"
+                    [(ngModel)]="item.summary"
+                    [name]="'portfolioSummary' + i"
+                  ></textarea>
+                </label>
+                <div>
+                  <div class="flex items-center justify-between">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Tags</h4>
+                    <button type="button" class="text-xs font-semibold text-primary" (click)="addPortfolioTag(item)">
+                      Add tag
+                    </button>
+                  </div>
+                  <div class="mt-3 space-y-3">
+                    <div *ngFor="let tag of item.tags; let j = index" class="flex items-center gap-3">
+                      <input
+                        class="form-input flex-1"
+                        [(ngModel)]="item.tags[j]"
+                        [name]="'portfolioTag' + i + '-' + j"
+                      />
+                      <button type="button" class="text-xs text-red-500" (click)="removePortfolioTag(item, j)">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="text-xs font-semibold text-red-500" (click)="removePortfolioWork(i)">
+                  Remove project
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary"
+              (click)="resetPortfolioContent()"
+            >
+              Reset Changes
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-primary/20 transition hover:-translate-y-0.5"
+              (click)="savePortfolioContent()"
+            >
+              Save Portfolio Page
+            </button>
+          </div>
+        </div>
+        <ng-template #portfolioLoading>
+          <p class="mt-6 text-sm text-slate-500">Loading portfolio page content...</p>
+        </ng-template>
+      </details>
+
+      <details id="page-about" class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+        <summary class="cursor-pointer text-lg font-semibold text-primary">About Page</summary>
+        <div *ngIf="aboutDraft as about; else aboutLoading" class="mt-6 space-y-6">
+          <div class="grid gap-4 md:grid-cols-3">
+            <label class="form-label">
+              <span class="text-sm font-semibold text-primary">Eyebrow</span>
+              <input class="form-input" [(ngModel)]="about.header.eyebrow" name="aboutHeaderEyebrow" />
+            </label>
+            <label class="form-label md:col-span-2">
+              <span class="text-sm font-semibold text-primary">Title</span>
+              <input class="form-input" [(ngModel)]="about.header.title" name="aboutHeaderTitle" />
+            </label>
+          </div>
+          <label class="form-label block">
+            <span class="text-sm font-semibold text-primary">Subtitle</span>
+            <textarea
+              class="form-input"
+              rows="2"
+              [(ngModel)]="about.header.subtitle"
+              name="aboutHeaderSubtitle"
+            ></textarea>
+          </label>
+          <label class="form-label block">
+            <span class="text-sm font-semibold text-primary">Intro Paragraph</span>
+            <textarea class="form-input" rows="3" [(ngModel)]="about.intro" name="aboutIntro"></textarea>
+          </label>
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-primary">Core Values</h3>
+              <button type="button" class="text-sm font-semibold text-primary" (click)="addAboutValue()">
+                Add value
+              </button>
+            </div>
+            <div class="mt-4 space-y-4">
+              <div
+                *ngFor="let value of about.values; let i = index"
+                class="space-y-4 rounded-3xl border border-slate-200 bg-white/60 p-4 shadow-sm"
+              >
+                <label class="form-label block">
+                  <span class="text-xs font-semibold text-primary uppercase">Title</span>
+                  <input class="form-input" [(ngModel)]="value.title" [name]="'aboutValueTitle' + i" />
+                </label>
+                <label class="form-label block">
+                  <span class="text-xs font-semibold text-primary uppercase">Description</span>
+                  <textarea
+                    class="form-input"
+                    rows="2"
+                    [(ngModel)]="value.description"
+                    [name]="'aboutValueDescription' + i"
+                  ></textarea>
+                </label>
+                <button type="button" class="text-xs font-semibold text-red-500" (click)="removeAboutValue(i)">
+                  Remove value
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-4 rounded-3xl border border-slate-200 bg-white/60 p-4 shadow-sm">
+            <h3 class="text-sm font-semibold text-primary">Leadership Section</h3>
+            <label class="form-label block">
+              <span class="text-xs font-semibold text-primary uppercase">Title</span>
+              <input class="form-input" [(ngModel)]="about.leadership.title" name="aboutLeadershipTitle" />
+            </label>
+            <label class="form-label block">
+              <span class="text-xs font-semibold text-primary uppercase">Description</span>
+              <textarea
+                class="form-input"
+                rows="2"
+                [(ngModel)]="about.leadership.description"
+                name="aboutLeadershipDescription"
+              ></textarea>
+            </label>
+            <div>
+              <div class="flex items-center justify-between">
+                <h4 class="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Highlights</h4>
+                <button type="button" class="text-xs font-semibold text-primary" (click)="addAboutLeadershipHighlight()">
+                  Add highlight
+                </button>
+              </div>
+              <div class="mt-3 space-y-3">
+                <div *ngFor="let highlight of about.leadership.highlights; let i = index" class="flex items-center gap-3">
+                  <input
+                    class="form-input flex-1"
+                    [(ngModel)]="about.leadership.highlights[i]"
+                    [name]="'aboutLeadershipHighlight' + i"
+                  />
+                  <button type="button" class="text-xs text-red-500" (click)="removeAboutLeadershipHighlight(i)">
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              <label class="form-label">
+                <span class="text-xs font-semibold text-primary uppercase">CTA Label</span>
+                <input class="form-input" [(ngModel)]="about.leadership.cta.label" name="aboutLeadershipCtaLabel" />
+              </label>
+              <label class="form-label">
+                <span class="text-xs font-semibold text-primary uppercase">CTA Router Link</span>
+                <input class="form-input" [(ngModel)]="about.leadership.cta.routerLink" name="aboutLeadershipCtaLink" />
+              </label>
+            </div>
+            <label class="form-label block">
+              <span class="text-xs font-semibold text-primary uppercase">CTA Fragment</span>
+              <input class="form-input" [(ngModel)]="about.leadership.cta.fragment" name="aboutLeadershipCtaFragment" />
+            </label>
+          </div>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary"
+              (click)="resetAboutContent()"
+            >
+              Reset Changes
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-primary/20 transition hover:-translate-y-0.5"
+              (click)="saveAboutContent()"
+            >
+              Save About Page
+            </button>
+          </div>
+        </div>
+        <ng-template #aboutLoading>
+          <p class="mt-6 text-sm text-slate-500">Loading about page content...</p>
+        </ng-template>
+      </details>
+
+      <details id="page-insights" class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+        <summary class="cursor-pointer text-lg font-semibold text-primary">Insights Page</summary>
+        <div *ngIf="insightsDraft as insights; else insightsLoading" class="mt-6 space-y-6">
+          <div class="grid gap-4 md:grid-cols-3">
+            <label class="form-label">
+              <span class="text-sm font-semibold text-primary">Eyebrow</span>
+              <input class="form-input" [(ngModel)]="insights.header.eyebrow" name="insightsHeaderEyebrow" />
+            </label>
+            <label class="form-label md:col-span-2">
+              <span class="text-sm font-semibold text-primary">Title</span>
+              <input class="form-input" [(ngModel)]="insights.header.title" name="insightsHeaderTitle" />
+            </label>
+          </div>
+          <label class="form-label block">
+            <span class="text-sm font-semibold text-primary">Subtitle</span>
+            <textarea
+              class="form-input"
+              rows="2"
+              [(ngModel)]="insights.header.subtitle"
+              name="insightsHeaderSubtitle"
+            ></textarea>
+          </label>
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-primary">Entries</h3>
+              <button type="button" class="text-sm font-semibold text-primary" (click)="addInsightEntry()">
+                Add entry
+              </button>
+            </div>
+            <div class="mt-4 space-y-4">
+              <div
+                *ngFor="let entry of insights.entries; let i = index"
+                class="space-y-4 rounded-3xl border border-slate-200 bg-white/60 p-4 shadow-sm"
+              >
+                <div class="grid gap-4 md:grid-cols-3">
+                  <label class="form-label">
+                    <span class="text-xs font-semibold text-primary uppercase">Title</span>
+                    <input class="form-input" [(ngModel)]="entry.title" [name]="'insightTitle' + i" />
+                  </label>
+                  <label class="form-label">
+                    <span class="text-xs font-semibold text-primary uppercase">Category</span>
+                    <input class="form-input" [(ngModel)]="entry.category" [name]="'insightCategory' + i" />
+                  </label>
+                  <label class="form-label">
+                    <span class="text-xs font-semibold text-primary uppercase">Read Time</span>
+                    <input class="form-input" [(ngModel)]="entry.readTime" [name]="'insightReadTime' + i" />
+                  </label>
+                </div>
+                <label class="form-label block">
+                  <span class="text-xs font-semibold text-primary uppercase">Excerpt</span>
+                  <textarea
+                    class="form-input"
+                    rows="2"
+                    [(ngModel)]="entry.excerpt"
+                    [name]="'insightExcerpt' + i"
+                  ></textarea>
+                </label>
+                <button type="button" class="text-xs font-semibold text-red-500" (click)="removeInsightEntry(i)">
+                  Remove entry
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary"
+              (click)="resetInsightsContent()"
+            >
+              Reset Changes
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-primary/20 transition hover:-translate-y-0.5"
+              (click)="saveInsightsContent()"
+            >
+              Save Insights Page
+            </button>
+          </div>
+        </div>
+        <ng-template #insightsLoading>
+          <p class="mt-6 text-sm text-slate-500">Loading insights page content...</p>
+        </ng-template>
+      </details>
+
+      <details id="page-contact" class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+        <summary class="cursor-pointer text-lg font-semibold text-primary">Contact Page</summary>
+        <div *ngIf="contactDraft as contact; else contactLoading" class="mt-6 space-y-6">
+          <div class="grid gap-4 md:grid-cols-3">
+            <label class="form-label">
+              <span class="text-sm font-semibold text-primary">Eyebrow</span>
+              <input class="form-input" [(ngModel)]="contact.header.eyebrow" name="contactPageHeaderEyebrow" />
+            </label>
+            <label class="form-label md:col-span-2">
+              <span class="text-sm font-semibold text-primary">Title</span>
+              <input class="form-input" [(ngModel)]="contact.header.title" name="contactPageHeaderTitle" />
+            </label>
+          </div>
+          <label class="form-label block">
+            <span class="text-sm font-semibold text-primary">Subtitle</span>
+            <textarea
+              class="form-input"
+              rows="2"
+              [(ngModel)]="contact.header.subtitle"
+              name="contactPageHeaderSubtitle"
+            ></textarea>
+          </label>
+          <label class="form-label block">
+            <span class="text-sm font-semibold text-primary">Consultation Options</span>
+            <textarea
+              class="form-input"
+              rows="2"
+              [(ngModel)]="contact.consultationOptions"
+              name="contactPageConsultation"
+            ></textarea>
+          </label>
+          <label class="form-label block">
+            <span class="text-sm font-semibold text-primary">Regional Support</span>
+            <input class="form-input" [(ngModel)]="contact.regionalSupport" name="contactPageRegionalSupport" />
+          </label>
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-primary">Emails</h3>
+              <button type="button" class="text-sm font-semibold text-primary" (click)="addContactPageEmail()">
+                Add email
+              </button>
+            </div>
+            <div class="mt-3 space-y-3">
+              <div *ngFor="let email of contact.emails; let i = index" class="flex items-center gap-3">
+                <input
+                  class="form-input flex-1"
+                  [(ngModel)]="contact.emails[i]"
+                  [name]="'contactPageEmail' + i"
+                />
+                <button type="button" class="text-xs text-red-500" (click)="removeContactPageEmail(i)">
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-primary">Form Options</h3>
+              <button type="button" class="text-sm font-semibold text-primary" (click)="addContactFormOption()">
+                Add option
+              </button>
+            </div>
+            <div class="mt-3 space-y-3">
+              <div *ngFor="let option of contact.formOptions; let i = index" class="flex items-center gap-3">
+                <input
+                  class="form-input flex-1"
+                  [(ngModel)]="contact.formOptions[i]"
+                  [name]="'contactPageOption' + i"
+                />
+                <button type="button" class="text-xs text-red-500" (click)="removeContactFormOption(i)">
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+          <label class="form-label block">
+            <span class="text-sm font-semibold text-primary">NDA Label</span>
+            <textarea class="form-input" rows="2" [(ngModel)]="contact.ndaLabel" name="contactPageNdaLabel"></textarea>
+          </label>
+          <label class="form-label block">
+            <span class="text-sm font-semibold text-primary">Response Time</span>
+            <textarea class="form-input" rows="2" [(ngModel)]="contact.responseTime" name="contactPageResponse"></textarea>
+          </label>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary"
+              (click)="resetContactPageContent()"
+            >
+              Reset Changes
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-primary/20 transition hover:-translate-y-0.5"
+              (click)="saveContactPageContent()"
+            >
+              Save Contact Page
+            </button>
+          </div>
+        </div>
+        <ng-template #contactLoading>
+          <p class="mt-6 text-sm text-slate-500">Loading contact page content...</p>
+        </ng-template>
+      </details>
+
+      <details id="page-navigation" class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+        <summary class="cursor-pointer text-lg font-semibold text-primary">Navigation Links</summary>
+        <div *ngIf="navigationDraft as navigation; else navigationLoading" class="mt-6 space-y-6">
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-primary">Links</h3>
+              <button type="button" class="text-sm font-semibold text-primary" (click)="addNavigationLink()">
+                Add link
+              </button>
+            </div>
+            <div class="mt-3 space-y-3">
+              <div *ngFor="let link of navigation.links; let i = index" class="grid gap-3 md:grid-cols-2">
+                <input class="form-input" [(ngModel)]="link.label" [name]="'navigationLabel' + i" placeholder="Label" />
+                <div class="flex flex-col gap-2 md:flex-row md:items-center md:gap-3">
+                  <input
+                    class="form-input flex-1"
+                    [(ngModel)]="link.path"
+                    [name]="'navigationPath' + i"
+                    placeholder="Path"
+                  />
+                  <button type="button" class="text-xs text-red-500" (click)="removeNavigationLink(i)">
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary"
+              (click)="resetNavigationLinks()"
+            >
+              Reset Changes
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-primary/20 transition hover:-translate-y-0.5"
+              (click)="saveNavigationLinks()"
+            >
+              Save Navigation Links
+            </button>
+          </div>
+        </div>
+        <ng-template #navigationLoading>
+          <p class="mt-6 text-sm text-slate-500">Loading navigation links...</p>
+        </ng-template>
+      </details>
+
+      <details id="page-footer" class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+        <summary class="cursor-pointer text-lg font-semibold text-primary">Footer Socials</summary>
+        <div *ngIf="footerDraft as footer; else footerLoading" class="mt-6 space-y-6">
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-primary">Social Links</h3>
+              <button type="button" class="text-sm font-semibold text-primary" (click)="addFooterSocial()">
+                Add social link
+              </button>
+            </div>
+            <div class="mt-3 space-y-3">
+              <div *ngFor="let social of footer.socialLinks; let i = index" class="grid gap-3 md:grid-cols-3">
+                <input class="form-input" [(ngModel)]="social.label" [name]="'footerSocialLabel' + i" placeholder="Label" />
+                <input
+                  class="form-input md:col-span-2"
+                  [(ngModel)]="social.url"
+                  [name]="'footerSocialUrl' + i"
+                  placeholder="URL"
+                />
+                <button
+                  type="button"
+                  class="text-xs text-red-500 md:col-span-3 md:justify-self-end"
+                  (click)="removeFooterSocial(i)"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary"
+              (click)="resetFooterSocials()"
+            >
+              Reset Changes
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-primary/20 transition hover:-translate-y-0.5"
+              (click)="saveFooterSocials()"
+            >
+              Save Footer Links
+            </button>
+          </div>
+        </div>
+        <ng-template #footerLoading>
+          <p class="mt-6 text-sm text-slate-500">Loading footer links...</p>
+        </ng-template>
+      </details>
+
+      <details id="page-sitemap" class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+        <summary class="cursor-pointer text-lg font-semibold text-primary">Sitemap Links</summary>
+        <div *ngIf="sitemapDraft as sitemap; else sitemapLoading" class="mt-6 space-y-6">
+          <div>
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-primary">Links</h3>
+              <button type="button" class="text-sm font-semibold text-primary" (click)="addSitemapLink()">
+                Add link
+              </button>
+            </div>
+            <div class="mt-3 space-y-3">
+              <div *ngFor="let link of sitemap.links; let i = index" class="grid gap-3 md:grid-cols-3">
+                <input class="form-input" [(ngModel)]="link.label" [name]="'sitemapLabel' + i" placeholder="Label" />
+                <input
+                  class="form-input md:col-span-2"
+                  [(ngModel)]="link.url"
+                  [name]="'sitemapUrl' + i"
+                  placeholder="URL"
+                />
+                <button
+                  type="button"
+                  class="text-xs text-red-500 md:col-span-3 md:justify-self-end"
+                  (click)="removeSitemapLink(i)"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary"
+              (click)="resetSitemapLinks()"
+            >
+              Reset Changes
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-primary/20 transition hover:-translate-y-0.5"
+              (click)="saveSitemapLinks()"
+            >
+              Save Sitemap Links
+            </button>
+          </div>
+        </div>
+        <ng-template #sitemapLoading>
+          <p class="mt-6 text-sm text-slate-500">Loading sitemap links...</p>
+        </ng-template>
+      </details>
+
         </form>
       </div>
     </div>

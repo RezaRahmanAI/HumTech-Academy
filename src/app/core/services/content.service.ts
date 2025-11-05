@@ -1,176 +1,19 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { take } from 'rxjs';
 
-export interface CtaLink {
-  label: string;
-  routerLink?: string | any[];
-  fragment?: string;
-  externalUrl?: string;
-  style?: 'primary' | 'secondary' | 'outline';
-}
-
-export interface SectionHeaderContent {
-  eyebrow?: string;
-  title: string;
-  subtitle?: string;
-  align?: 'left' | 'center';
-}
-
-export interface ServiceCard {
-  title: string;
-  icon: string;
-  description: string;
-  highlights: string[];
-  tagline: string;
-  featured?: boolean;
-}
-
-export interface StatItem {
-  label: string;
-  value: number;
-  suffix?: string;
-  decimals?: number;
-}
-
-export interface Testimonial {
-  quote: string;
-  name: string;
-  title: string;
-  location: string;
-  rating: number;
-  type: 'client' | 'student';
-}
-
-export interface InsightItem {
-  title: string;
-  category: string;
-  summary: string;
-  readTime: string;
-}
-
-export interface HomeContent {
-  hero: {
-    badge: string;
-    title: string;
-    description: string;
-    primaryCta: CtaLink;
-    secondaryCta: CtaLink;
-    highlightCard: {
-      title: string;
-      description: string;
-    };
-    highlightList: string[];
-    video: {
-      src: string;
-      poster: string;
-    };
-    featurePanel: {
-      eyebrow: string;
-      title: string;
-      description: string;
-      metrics: { label: string; value: string; theme: 'accent' | 'emerald' }[];
-      partner: { label: string; description: string };
-    };
-  };
-  trust: {
-    tagline: string;
-    companies: string[];
-    stats: StatItem[];
-  };
-  services: {
-    header: SectionHeaderContent;
-    items: ServiceCard[];
-  };
-  differentiators: {
-    header: SectionHeaderContent;
-    items: { title: string; description: string }[];
-    partnershipPanel: {
-      eyebrow: string;
-      title: string;
-      description: string;
-      highlights: { label: string; value: string }[];
-    };
-  };
-  methodology: {
-    header: SectionHeaderContent;
-    steps: { step: string; detail: string }[];
-  };
-  caseStudies: {
-    header: SectionHeaderContent;
-    items: {
-      client: string;
-      industry: string;
-      challenge: string;
-      solution: string;
-      result: string;
-    }[];
-  };
-  academy: {
-    header: SectionHeaderContent;
-    categories: string[];
-    stats: StatItem[];
-    featuredCourses: {
-      title: string;
-      instructor: string;
-      duration: string;
-      rating: string;
-      price: string;
-    }[];
-    benefits: string[];
-  };
-  globalPresence: {
-    header: SectionHeaderContent;
-    headquarters: {
-      title: string;
-      location: string;
-      address: string;
-    };
-    marketsServed: string;
-    verticals: string;
-    map: {
-      title: string;
-      description: string;
-      badge: string;
-    };
-  };
-  testimonials: {
-    header: SectionHeaderContent;
-    items: Testimonial[];
-  };
-  impact: {
-    header: SectionHeaderContent;
-    stats: StatItem[];
-  };
-  insights: {
-    header: SectionHeaderContent;
-    items: InsightItem[];
-  };
-  closingCtas: {
-    business: {
-      title: string;
-      description: string;
-      cta: CtaLink;
-    };
-    academy: {
-      title: string;
-      description: string;
-      cta: CtaLink;
-    };
-  };
-  contact: {
-    header: SectionHeaderContent;
-    headquarters: string;
-    phones: string[];
-    emails: { label: string; value: string }[];
-    businessHours: string[];
-    socials: { label: string; url: string }[];
-    consultation: CtaLink;
-    profileDownload: { label: string; url: string };
-  };
-}
+import {
+  HomeContent,
+  InsightItem,
+  ServiceCard,
+  StatItem,
+  Testimonial
+} from '../models/home-content.model';
+import { ContentApiService } from './content-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class ContentService {
   private readonly storageKey = 'hum-tech-academy-home-content';
+  private readonly api = inject(ContentApiService);
 
   private readonly initialHomeContent: HomeContent = {
     hero: {
@@ -197,7 +40,7 @@ export class ContentService {
         'Live instructor-led courses with industry experts'
       ],
       video: {
-        src: 'video/hero.mp4',
+        src: '/video/hero.mp4',
         poster: 'https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=1600&q=80'
       },
       featurePanel: {
@@ -592,10 +435,15 @@ export class ContentService {
 
   readonly homeContent = computed(() => this._homeContent());
 
+  constructor() {
+    this.syncFromApi();
+  }
+
   setHomeContent(content: HomeContent): void {
     const next = this.clone(content);
     this._homeContent.set(next);
     this.persistHomeContent(next);
+    this.pushContentToApi(next);
   }
 
   updateHomeContent(mutator: (content: HomeContent) => HomeContent): void {
@@ -604,6 +452,7 @@ export class ContentService {
       const mutated = mutator(clone);
       const next = this.clone(mutated);
       this.persistHomeContent(next);
+      this.pushContentToApi(next);
       return next;
     });
   }
@@ -612,6 +461,7 @@ export class ContentService {
     const next = this.clone(this.initialHomeContent);
     this._homeContent.set(next);
     this.persistHomeContent(next);
+    this.pushContentToApi(next);
   }
 
   private loadHomeContent(): HomeContent {
@@ -634,6 +484,33 @@ export class ContentService {
       return;
     }
     window.localStorage.setItem(this.storageKey, JSON.stringify(content));
+  }
+
+  private syncFromApi(): void {
+    this.api
+      .getHomeContent()
+      .pipe(take(1))
+      .subscribe({
+        next: (content) => {
+          const next = this.clone(content);
+          this._homeContent.set(next);
+          this.persistHomeContent(next);
+        },
+        error: (error) => {
+          console.error('Failed to load home content from API', error);
+        }
+      });
+  }
+
+  private pushContentToApi(content: HomeContent): void {
+    this.api
+      .updateHomeContent(content)
+      .pipe(take(1))
+      .subscribe({
+        error: (error) => {
+          console.error('Failed to update home content via API', error);
+        }
+      });
   }
 
   private clone<T>(value: T): T {

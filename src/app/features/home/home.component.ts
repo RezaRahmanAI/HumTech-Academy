@@ -34,6 +34,8 @@ export class HomeComponent implements AfterViewInit {
   private counters?: QueryList<ElementRef<HTMLElement>>;
 
   protected readonly home = this.content.homeContent;
+  protected readonly heroVideoSrc = computed(() => this.normalizeMediaUrl(this.home().hero.video.src));
+  protected readonly heroVideoPoster = computed(() => this.normalizeMediaUrl(this.home().hero.video.poster));
 
   protected readonly testimonialView = signal<'client' | 'student'>('client');
 
@@ -77,5 +79,16 @@ export class HomeComponent implements AfterViewInit {
 
   protected setTestimonialView(view: 'client' | 'student'): void {
     this.testimonialView.set(view);
+  }
+
+  private normalizeMediaUrl(url: string | null | undefined): string {
+    if (!url) {
+      return '';
+    }
+    if (/^(https?:)?\/\//.test(url) || url.startsWith('data:')) {
+      return url;
+    }
+    const normalized = url.startsWith('/') ? url : `/${url.replace(/^\/+/, '')}`;
+    return normalized.replace(/\/+$/, '');
   }
 }

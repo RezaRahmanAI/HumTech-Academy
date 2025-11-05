@@ -1,7 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ContentService, HomeContent, ServiceCard, StatItem, Testimonial, InsightItem } from '../../core/services/content.service';
+import { ContentService } from '../../core/services/content.service';
+import {
+  HomeContent,
+  InsightItem,
+  ServiceCard,
+  StatItem,
+  Testimonial
+} from '../../core/models/home-content.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,9 +20,27 @@ import { ContentService, HomeContent, ServiceCard, StatItem, Testimonial, Insigh
 })
 export class DashboardComponent {
   protected draft: HomeContent;
+  protected readonly sectionNav = [
+    { id: 'hero', label: 'Hero Section' },
+    { id: 'trust', label: 'Trust & Stats' },
+    { id: 'services', label: 'Services' },
+    { id: 'differentiators', label: 'Differentiators' },
+    { id: 'methodology', label: 'Methodology' },
+    { id: 'case-studies', label: 'Case Studies' },
+    { id: 'academy', label: 'Academy' },
+    { id: 'global-presence', label: 'Global Presence' },
+    { id: 'testimonials', label: 'Testimonials & Impact' },
+    { id: 'impact', label: 'Impact Metrics' },
+    { id: 'insights', label: 'Insights' },
+    { id: 'closing-ctas', label: 'Closing CTAs' },
+    { id: 'contact', label: 'Contact' }
+  ];
 
   constructor(private readonly content: ContentService) {
     this.draft = this.clone(this.content.homeContent());
+    effect(() => {
+      this.draft = this.clone(this.content.homeContent());
+    });
   }
 
   protected saveHomeContent(): void {

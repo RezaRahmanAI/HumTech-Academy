@@ -25,13 +25,43 @@
       </div>
     </header>
 
-    <form class="space-y-10">
-      <details open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
-        <summary class="cursor-pointer text-lg font-semibold text-primary">Hero Section</summary>
-        <div class="mt-6 space-y-6">
-          <div class="grid gap-4 md:grid-cols-2">
-            <label class="form-label">
-              <span class="text-sm font-semibold text-primary">Badge</span>
+    <div class="lg:grid lg:grid-cols-[240px_1fr] lg:items-start lg:gap-10 xl:gap-12">
+      <aside class="dashboard-side-nav">
+        <h2 class="px-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Sections</h2>
+        <nav class="mt-4 space-y-1">
+          <a
+            *ngFor="let section of sectionNav"
+            class="dashboard-side-link"
+            [attr.href]="'#' + section.id"
+          >
+            {{ section.label }}
+          </a>
+        </nav>
+      </aside>
+      <div class="space-y-8">
+        <div class="dashboard-mobile-nav">
+          <span class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Sections</span>
+          <div class="mt-3 flex gap-2 overflow-x-auto">
+            <a
+              *ngFor="let section of sectionNav"
+              class="dashboard-mobile-link"
+              [attr.href]="'#' + section.id"
+            >
+              {{ section.label }}
+            </a>
+          </div>
+        </div>
+        <form class="space-y-10">
+          <details
+            id="hero"
+            open
+            class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow"
+          >
+          <summary class="cursor-pointer text-lg font-semibold text-primary">Hero Section</summary>
+          <div class="mt-6 space-y-6">
+            <div class="grid gap-4 md:grid-cols-2">
+              <label class="form-label">
+                <span class="text-sm font-semibold text-primary">Badge</span>
               <input class="form-input" [(ngModel)]="draft.hero.badge" name="heroBadge" />
             </label>
             <label class="form-label">
@@ -145,15 +175,15 @@
             <textarea class="form-input" rows="2" [(ngModel)]="draft.hero.featurePanel.partner.description" name="heroPartnerDescription" placeholder="Description"></textarea>
           </label>
         </div>
-      </details>
+          </details>
 
-      <details open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
-        <summary class="cursor-pointer text-lg font-semibold text-primary">Trust &amp; Stats</summary>
-        <div class="mt-6 space-y-6">
-          <label class="form-label block">
-            <span class="text-sm font-semibold text-primary">Tagline</span>
-            <input class="form-input" [(ngModel)]="draft.trust.tagline" name="trustTagline" />
-          </label>
+          <details id="trust" open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+          <summary class="cursor-pointer text-lg font-semibold text-primary">Trust &amp; Stats</summary>
+          <div class="mt-6 space-y-6">
+            <label class="form-label block">
+              <span class="text-sm font-semibold text-primary">Tagline</span>
+              <input class="form-input" [(ngModel)]="draft.trust.tagline" name="trustTagline" />
+            </label>
           <div>
             <div class="flex items-center justify-between">
               <h3 class="text-sm font-semibold text-primary">Companies</h3>
@@ -198,7 +228,7 @@
         </div>
       </details>
 
-      <details open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+      <details id="services" open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
         <summary class="cursor-pointer text-lg font-semibold text-primary">Services</summary>
         <div class="mt-6 space-y-6">
           <div class="grid gap-4 md:grid-cols-3">
@@ -266,7 +296,7 @@
         </div>
       </details>
 
-      <details open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+      <details id="differentiators" open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
         <summary class="cursor-pointer text-lg font-semibold text-primary">Differentiators</summary>
         <div class="mt-6 space-y-6">
           <div class="grid gap-4 md:grid-cols-3">
@@ -302,7 +332,7 @@
               </div>
             </div>
           </div>
-          <div class="rounded-2xl border border-slate-200 p-4">
+          <div id="impact" class="rounded-2xl border border-slate-200 p-4">
             <h3 class="text-sm font-semibold text-primary">Partnership Panel</h3>
             <div class="mt-3 grid gap-4 md:grid-cols-3">
               <label class="form-label">
@@ -337,7 +367,7 @@
         </div>
       </details>
 
-      <details open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+      <details id="methodology" open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
         <summary class="cursor-pointer text-lg font-semibold text-primary">Methodology</summary>
         <div class="mt-6 space-y-6">
           <div class="grid gap-4 md:grid-cols-3">
@@ -376,7 +406,7 @@
         </div>
       </details>
 
-      <details open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+      <details id="case-studies" open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
         <summary class="cursor-pointer text-lg font-semibold text-primary">Case Studies</summary>
         <div class="mt-6 space-y-6">
           <div class="grid gap-4 md:grid-cols-3">
@@ -429,7 +459,7 @@
         </div>
       </details>
 
-      <details open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+      <details id="academy" open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
         <summary class="cursor-pointer text-lg font-semibold text-primary">Academy</summary>
         <div class="mt-6 space-y-6">
           <div class="grid gap-4 md:grid-cols-3">
@@ -537,7 +567,7 @@
         </div>
       </details>
 
-      <details open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+      <details id="global-presence" open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
         <summary class="cursor-pointer text-lg font-semibold text-primary">Global Presence</summary>
         <div class="mt-6 space-y-6">
           <div class="grid gap-4 md:grid-cols-3">
@@ -593,7 +623,7 @@
         </div>
       </details>
 
-      <details open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+      <details id="testimonials" open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
         <summary class="cursor-pointer text-lg font-semibold text-primary">Testimonials &amp; Impact</summary>
         <div class="mt-6 space-y-6">
           <div class="grid gap-4 md:grid-cols-3">
@@ -689,7 +719,7 @@
         </div>
       </details>
 
-      <details open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+      <details id="insights" open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
         <summary class="cursor-pointer text-lg font-semibold text-primary">Insights</summary>
         <div class="mt-6 space-y-6">
           <div class="grid gap-4 md:grid-cols-3">
@@ -738,7 +768,7 @@
         </div>
       </details>
 
-      <details open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+      <details id="closing-ctas" open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
         <summary class="cursor-pointer text-lg font-semibold text-primary">Closing CTAs</summary>
         <div class="mt-6 grid gap-6 md:grid-cols-2">
           <div class="rounded-2xl border border-slate-200 p-4">
@@ -798,7 +828,7 @@
         </div>
       </details>
 
-      <details open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+      <details id="contact" open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
         <summary class="cursor-pointer text-lg font-semibold text-primary">Contact</summary>
         <div class="mt-6 space-y-6">
           <div class="grid gap-4 md:grid-cols-3">
@@ -901,6 +931,8 @@
           </div>
         </div>
       </details>
-    </form>
+        </form>
+      </div>
+    </div>
   </div>
 </section>

@@ -12,6 +12,11 @@ export const routes: Routes = [
     title: 'Services | Hum Tech & Academy'
   },
   {
+    path: 'dashboard',
+    loadComponent: () => import('./features/dashboard/dashboard.component').then((m) => m.DashboardComponent),
+    title: 'Content Dashboard | Hum Tech & Academy'
+  },
+  {
     path: 'academy',
     loadComponent: () => import('./features/academy/academy.component').then((m) => m.AcademyComponent),
     title: 'Hum Academy | Live Technology Courses'

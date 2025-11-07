@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PageContentService } from '../../core/services/page-content.service';
 
 @Component({
   selector: 'app-sitemap',
@@ -12,11 +11,16 @@ import { PageContentService } from '../../core/services/page-content.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SitemapComponent {
-  private readonly pageContent = inject(PageContentService);
-  protected readonly sitemap = this.pageContent.getPageSignal<{ links: { label: string; url: string }[] }>('sitemap');
-  protected readonly links = computed(() => this.sitemap()?.links ?? []);
-
-  constructor() {
-    this.pageContent.loadPage<{ links: { label: string; url: string }[] }>('sitemap').subscribe();
-  }
+  protected readonly links = [
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Academy', url: '/academy' },
+    { label: 'Portfolio', url: '/portfolio' },
+    { label: 'About', url: '/about' },
+    { label: 'Contact', url: '/contact' },
+    { label: 'Insights', url: '/insights' },
+    { label: 'Privacy Policy', url: '/legal/privacy' },
+    { label: 'Terms of Service', url: '/legal/terms' },
+    { label: 'Refund Policy', url: '/legal/refund' }
+  ];
 }

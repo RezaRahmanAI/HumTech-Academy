@@ -1,47 +1,29 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
 import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
-import { PageContentService } from '../../core/services/page-content.service';
-
-interface AboutPageContent {
-  header: {
-    eyebrow: string;
-    title: string;
-    subtitle: string;
-  };
-  intro: string;
-  values: { title: string; description: string }[];
-  leadership: {
-    title: string;
-    description: string;
-    highlights: string[];
-    cta: {
-      label: string;
-      routerLink: string;
-      fragment?: string;
-    };
-  };
-}
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule, RouterLink, SectionHeaderComponent, ScrollRevealDirective],
+  imports: [CommonModule, SectionHeaderComponent, ScrollRevealDirective],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutComponent {
-  private readonly pageContent = inject(PageContentService);
-  protected readonly aboutContent = this.pageContent.getPageSignal<AboutPageContent>('about');
-  protected readonly header = computed(() => this.aboutContent()?.header);
-  protected readonly intro = computed(() => this.aboutContent()?.intro ?? '');
-  protected readonly values = computed(() => this.aboutContent()?.values ?? []);
-  protected readonly leadership = computed(() => this.aboutContent()?.leadership);
-
-  constructor() {
-    this.pageContent.loadPage<AboutPageContent>('about').subscribe();
-  }
+  protected readonly values = [
+    {
+      title: 'Human First Innovation',
+      description: 'We design technology that augments human potential, embracing accessibility, inclusion, and empathy.'
+    },
+    {
+      title: 'Craftsmanship & Accountability',
+      description: 'Every sprint, deliverable, and training cohort is measured against the outcomes we commit to.'
+    },
+    {
+      title: 'Global Mindset, Local Impact',
+      description: 'We bring international expertise while nurturing Bangladesh’s tech ecosystem and talent pipeline.'
+    }
+  ];
 }

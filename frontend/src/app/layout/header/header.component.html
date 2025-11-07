@@ -2,7 +2,8 @@
   class="fixed inset-x-0 top-0 z-50 transition-all duration-500"
   [ngClass]="{
     'bg-white/90 backdrop-blur shadow-glow': scrolled(),
-    'bg-transparent': !scrolled()
+    'bg-transparent': !scrolled(),
+    'hidden': !isAtTop()
   }"
 >
   <div class="container-wide">
@@ -11,7 +12,6 @@
         <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-accent/90 via-emerald/80 to-teal text-white font-heading text-xl">H</span>
         <span class="hidden flex-col leading-tight sm:flex">
           <span class="font-heading text-xl font-semibold tracking-tight">Hum Tech</span>
-          <span class="text-sm font-medium text-slate-500">&amp; Academy</span>
         </span>
         <span class="flex flex-col leading-tight sm:hidden">
           <span class="font-heading text-xl">Hum Tech</span>
@@ -21,7 +21,7 @@
 
       <div class="hidden items-center gap-8 lg:flex">
         <ul class="flex items-center gap-6 text-sm font-medium text-slate-600">
-          <li *ngFor="let link of navLinks()">
+          <li *ngFor="let link of navLinks">
             <a
               [routerLink]="link.path"
               routerLinkActive="text-primary"
@@ -32,21 +32,9 @@
             </a>
           </li>
         </ul>
-        <a
-          routerLink="/contact"
-          class="hidden rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition hover:-translate-y-0.5 hover:bg-slate-900 lg:inline-flex"
-        >
-          Get Started
-        </a>
       </div>
 
       <div class="flex items-center gap-3 lg:hidden">
-        <a
-          routerLink="/contact"
-          class="hidden rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition hover:-translate-y-0.5 hover:bg-slate-900 sm:inline-flex"
-        >
-          Get Started
-        </a>
         <button
           type="button"
           class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-primary shadow-sm transition hover:border-primary/50"
@@ -71,7 +59,7 @@
     <div class="container-wide pb-6">
       <div class="rounded-3xl border border-slate-100 bg-white/95 p-6 shadow-glow">
         <ul class="flex flex-col gap-4 text-base font-medium text-slate-700">
-          <li *ngFor="let link of navLinks()">
+          <li *ngFor="let link of navLinks">
             <a
               [routerLink]="link.path"
               routerLinkActive="text-primary"

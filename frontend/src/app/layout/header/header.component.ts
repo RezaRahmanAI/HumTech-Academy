@@ -1,15 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostListener, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { PageContentService } from '../../core/services/page-content.service';
 
 interface NavLink {
   label: string;
   path: string;
-}
-
-interface NavigationContent {
-  links: NavLink[];
 }
 
 @Component({
@@ -17,32 +12,44 @@ interface NavigationContent {
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./header.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  private readonly pageContent = inject(PageContentService);
-
+  // Signal to manage the state of the menu
   protected readonly menuOpen = signal(false);
+  // Signal to manage the scroll state
   protected readonly scrolled = signal(false);
-  private readonly navigation = this.pageContent.getPageSignal<NavigationContent>('navigation');
-  protected readonly navLinks = computed(() => this.navigation()?.links ?? []);
+  // Navigation links
+  protected readonly navLinks: NavLink[] = [
+    { label: 'Home', path: '/home' },
+    { label: 'Services', path: '/services' },
+    { label: 'Academy', path: '/academy' },
+    { label: 'Portfolio', path: '/portfolio' },
+    { label: 'About', path: '/about' },
+    { label: 'Contact', path: '/contact' },
+    // { label: 'Dashboard', path: '/dashboard' }
+  ];
 
-  constructor() {
-    this.pageContent.loadPage<NavigationContent>('navigation').subscribe();
-  }
-
+  // Track window scroll position
   @HostListener('window:scroll')
   onScroll(): void {
     const offset = typeof window !== 'undefined' ? window.scrollY : 0;
-    this.scrolled.set(offset > 10);
+    this.scrolled.set(offset > 10); // Change this threshold if needed
   }
 
+  // Toggle menu open state
   protected toggleMenu(): void {
     this.menuOpen.update((open) => !open);
   }
 
+  // Close menu when an item is clicked
   protected closeMenu(): void {
     this.menuOpen.set(false);
+  }
+
+  // Add a class to hide the navbar when scrolling
+  protected isAtTop(): boolean {
+    return !this.scrolled(); // Returns true if at the top
   }
 }

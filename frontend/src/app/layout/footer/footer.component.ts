@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PageContentService } from '../../core/services/page-content.service';
 
 @Component({
   selector: 'app-footer',
@@ -12,12 +11,14 @@ import { PageContentService } from '../../core/services/page-content.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent {
-  private readonly pageContent = inject(PageContentService);
   protected readonly currentYear = new Date().getFullYear();
-  private readonly footerContent = this.pageContent.getPageSignal<{ socialLinks: { label: string; url: string }[] }>('footer');
-  protected readonly socialLinks = computed(() => this.footerContent()?.socialLinks ?? []);
 
-  constructor() {
-    this.pageContent.loadPage<{ socialLinks: { label: string; url: string }[] }>('footer').subscribe();
-  }
+  protected readonly socialLinks = [
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/company/humtechacademy' },
+    { label: 'Facebook', url: 'https://www.facebook.com/humtechacademy' },
+    { label: 'Twitter', url: 'https://twitter.com/humtechacademy' },
+    { label: 'Instagram', url: 'https://www.instagram.com/humtechacademy' },
+    { label: 'YouTube', url: 'https://www.youtube.com/@humtechacademy' },
+    { label: 'GitHub', url: 'https://github.com/humtechacademy' }
+  ];
 }

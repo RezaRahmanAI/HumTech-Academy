@@ -1,23 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
 import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
-import { PageContentService } from '../../core/services/page-content.service';
 
 interface InsightEntry {
   title: string;
   category: string;
   excerpt: string;
   readTime: string;
-}
-
-interface InsightsPageContent {
-  header: {
-    eyebrow: string;
-    title: string;
-    subtitle: string;
-  };
-  entries: InsightEntry[];
 }
 
 @Component({
@@ -29,12 +19,24 @@ interface InsightsPageContent {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InsightsComponent {
-  private readonly pageContent = inject(PageContentService);
-  protected readonly insightsContent = this.pageContent.getPageSignal<InsightsPageContent>('insights');
-  protected readonly header = computed(() => this.insightsContent()?.header);
-  protected readonly entries = computed(() => this.insightsContent()?.entries ?? []);
-
-  constructor() {
-    this.pageContent.loadPage<InsightsPageContent>('insights').subscribe();
-  }
+  protected readonly entries: InsightEntry[] = [
+    {
+      title: 'Building Global Platforms from Bangladesh',
+      category: 'Thought Leadership',
+      excerpt: 'How distributed squads, lean experimentation, and academy enablement power our multinational partnerships.',
+      readTime: '8 min read'
+    },
+    {
+      title: 'Designing Inclusive Digital Services',
+      category: 'Experience Design',
+      excerpt: 'Practical accessibility, localization, and performance strategies for public sector portals and citizen services.',
+      readTime: '6 min read'
+    },
+    {
+      title: 'Upskilling Product Teams with Hum Academy',
+      category: 'Learning',
+      excerpt: 'Playbooks for aligning training roadmaps with product delivery to reduce onboarding time and talent gaps.',
+      readTime: '5 min read'
+    }
+  ];
 }

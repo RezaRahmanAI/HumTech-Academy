@@ -1,0 +1,62 @@
+<details
+  [id]="sectionId"
+  class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow"
+>
+  <summary class="cursor-pointer text-lg font-semibold text-primary">
+    Case Studies
+  </summary>
+  <div class="mt-6 space-y-6">
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Section Eyebrow</span>
+      <input class="form-input" [(ngModel)]="caseStudies.header.eyebrow" name="caseHeaderEyebrow" />
+    </label>
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Section Title</span>
+      <input class="form-input" [(ngModel)]="caseStudies.header.title" name="caseHeaderTitle" />
+    </label>
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Section Subtitle</span>
+      <textarea class="form-input" rows="2" [(ngModel)]="caseStudies.header.subtitle" name="caseHeaderSubtitle"></textarea>
+    </label>
+    <div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-primary">Projects</h3>
+        <button type="button" class="text-sm font-semibold text-primary" (click)="addCaseStudy()">
+          Add case study
+        </button>
+      </div>
+      <div class="mt-4 space-y-4">
+        <div *ngFor="let project of caseStudies.items; let i = index" class="rounded-2xl border border-slate-200 p-4">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-semibold text-primary">Case Study {{ i + 1 }}</h4>
+            <button type="button" class="text-xs text-red-500" (click)="removeCaseStudy(i)">
+              Remove case study
+            </button>
+          </div>
+          <div class="mt-4 grid gap-4 md:grid-cols-2">
+            <label class="form-label">
+              <span class="text-sm font-semibold text-primary">Client</span>
+              <input class="form-input" [(ngModel)]="project.client" [name]="'caseClient' + i" />
+            </label>
+            <label class="form-label">
+              <span class="text-sm font-semibold text-primary">Industry</span>
+              <input class="form-input" [(ngModel)]="project.industry" [name]="'caseIndustry' + i" />
+            </label>
+          </div>
+          <label class="form-label block mt-4">
+            <span class="text-sm font-semibold text-primary">Challenge</span>
+            <textarea class="form-input" rows="2" [(ngModel)]="project.challenge" [name]="'caseChallenge' + i"></textarea>
+          </label>
+          <label class="form-label block mt-4">
+            <span class="text-sm font-semibold text-primary">Solution</span>
+            <textarea class="form-input" rows="2" [(ngModel)]="project.solution" [name]="'caseSolution' + i"></textarea>
+          </label>
+          <label class="form-label block mt-4">
+            <span class="text-sm font-semibold text-primary">Result</span>
+            <textarea class="form-input" rows="2" [(ngModel)]="project.result" [name]="'caseResult' + i"></textarea>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</details>

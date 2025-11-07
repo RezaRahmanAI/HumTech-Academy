@@ -1,0 +1,126 @@
+<details
+  [id]="sectionId"
+  open
+  class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow"
+>
+  <summary class="cursor-pointer text-lg font-semibold text-primary">
+    Hero Section
+  </summary>
+  <div class="mt-6 space-y-6">
+    <div class="grid gap-4 md:grid-cols-2">
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Badge</span>
+        <input class="form-input" [(ngModel)]="hero.badge" name="heroBadge" />
+      </label>
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Title</span>
+        <input class="form-input" [(ngModel)]="hero.title" name="heroTitle" />
+      </label>
+    </div>
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Description</span>
+      <textarea class="form-input" rows="3" [(ngModel)]="hero.description" name="heroDescription"></textarea>
+    </label>
+    <div class="grid gap-4 md:grid-cols-2">
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Primary CTA Label</span>
+        <input class="form-input" [(ngModel)]="hero.primaryCta.label" name="heroPrimaryLabel" />
+      </label>
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Primary CTA Router Link</span>
+        <input class="form-input" [(ngModel)]="hero.primaryCta.routerLink" name="heroPrimaryLink" />
+      </label>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2">
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Secondary CTA Label</span>
+        <input class="form-input" [(ngModel)]="hero.secondaryCta.label" name="heroSecondaryLabel" />
+      </label>
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Secondary CTA Router Link</span>
+        <input class="form-input" [(ngModel)]="hero.secondaryCta.routerLink" name="heroSecondaryLink" />
+      </label>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2">
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Video Source</span>
+        <input class="form-input" [(ngModel)]="hero.video.src" name="heroVideoSrc" />
+      </label>
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Video Poster</span>
+        <input class="form-input" [(ngModel)]="hero.video.poster" name="heroVideoPoster" />
+      </label>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2">
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Highlight Card Title</span>
+        <input class="form-input" [(ngModel)]="hero.highlightCard.title" name="heroHighlightTitle" />
+      </label>
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Highlight Card Description</span>
+        <textarea class="form-input" rows="2" [(ngModel)]="hero.highlightCard.description" name="heroHighlightDescription"></textarea>
+      </label>
+    </div>
+    <div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-primary">Highlight List</h3>
+        <button type="button" class="text-sm font-semibold text-primary" (click)="addHighlight()">
+          Add highlight
+        </button>
+      </div>
+      <div class="mt-3 space-y-3">
+        <div *ngFor="let highlight of hero.highlightList; let i = index" class="flex items-center gap-3">
+          <input class="form-input flex-1" [(ngModel)]="hero.highlightList[i]" [name]="'heroHighlight' + i" />
+          <button type="button" class="text-xs text-red-500" (click)="removeHighlight(i)">
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="grid gap-4 md:grid-cols-3">
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Feature Eyebrow</span>
+        <input class="form-input" [(ngModel)]="hero.featurePanel.eyebrow" name="heroFeatureEyebrow" />
+      </label>
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Feature Title</span>
+        <input class="form-input" [(ngModel)]="hero.featurePanel.title" name="heroFeatureTitle" />
+      </label>
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Feature Description</span>
+        <textarea class="form-input" rows="2" [(ngModel)]="hero.featurePanel.description" name="heroFeatureDescription"></textarea>
+      </label>
+    </div>
+    <div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-primary">Feature Metrics</h3>
+        <button type="button" class="text-sm font-semibold text-primary" (click)="addMetric()">
+          Add metric
+        </button>
+      </div>
+      <div class="mt-3 space-y-3">
+        <div *ngFor="let metric of hero.featurePanel.metrics; let i = index" class="grid gap-3 md:grid-cols-3">
+          <input class="form-input" [(ngModel)]="metric.label" [name]="'heroMetricLabel' + i" placeholder="Label" />
+          <input class="form-input" [(ngModel)]="metric.value" [name]="'heroMetricValue' + i" placeholder="Value" />
+          <select class="form-input" [(ngModel)]="metric.theme" [name]="'heroMetricTheme' + i">
+            <option value="accent">Accent</option>
+            <option value="emerald">Emerald</option>
+          </select>
+          <button type="button" class="text-xs text-red-500 md:col-span-3 md:text-right" (click)="removeMetric(i)">
+            Remove metric
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2">
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Partner Label</span>
+        <input class="form-input" [(ngModel)]="hero.featurePanel.partner.label" name="heroPartnerLabel" />
+      </label>
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Partner Description</span>
+        <textarea class="form-input" rows="2" [(ngModel)]="hero.featurePanel.partner.description" name="heroPartnerDescription"></textarea>
+      </label>
+    </div>
+  </div>
+</details>

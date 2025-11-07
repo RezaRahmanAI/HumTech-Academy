@@ -1,0 +1,56 @@
+<details
+  [id]="sectionId"
+  class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow"
+>
+  <summary class="cursor-pointer text-lg font-semibold text-primary">
+    Insights
+  </summary>
+  <div class="mt-6 space-y-6">
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Section Eyebrow</span>
+      <input class="form-input" [(ngModel)]="insights.header.eyebrow" name="insightsHeaderEyebrow" />
+    </label>
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Section Title</span>
+      <input class="form-input" [(ngModel)]="insights.header.title" name="insightsHeaderTitle" />
+    </label>
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Section Subtitle</span>
+      <textarea class="form-input" rows="2" [(ngModel)]="insights.header.subtitle" name="insightsHeaderSubtitle"></textarea>
+    </label>
+    <div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-primary">Articles</h3>
+        <button type="button" class="text-sm font-semibold text-primary" (click)="addInsight()">
+          Add insight
+        </button>
+      </div>
+      <div class="mt-4 space-y-4">
+        <div *ngFor="let insight of insights.items; let i = index" class="rounded-2xl border border-slate-200 p-4">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-semibold text-primary">Insight {{ i + 1 }}</h4>
+            <button type="button" class="text-xs text-red-500" (click)="removeInsight(i)">
+              Remove insight
+            </button>
+          </div>
+          <label class="form-label block mt-4">
+            <span class="text-sm font-semibold text-primary">Title</span>
+            <input class="form-input" [(ngModel)]="insight.title" [name]="'insightTitle' + i" />
+          </label>
+          <label class="form-label block mt-4">
+            <span class="text-sm font-semibold text-primary">Category</span>
+            <input class="form-input" [(ngModel)]="insight.category" [name]="'insightCategory' + i" />
+          </label>
+          <label class="form-label block mt-4">
+            <span class="text-sm font-semibold text-primary">Summary</span>
+            <textarea class="form-input" rows="2" [(ngModel)]="insight.summary" [name]="'insightSummary' + i"></textarea>
+          </label>
+          <label class="form-label block mt-4">
+            <span class="text-sm font-semibold text-primary">Read Time</span>
+            <input class="form-input" [(ngModel)]="insight.readTime" [name]="'insightReadTime' + i" />
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</details>

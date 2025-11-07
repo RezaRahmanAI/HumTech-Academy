@@ -1,0 +1,60 @@
+<details
+  [id]="sectionId"
+  class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow"
+>
+  <summary class="cursor-pointer text-lg font-semibold text-primary">
+    Closing CTAs
+  </summary>
+  <div class="mt-6 space-y-6">
+    <div class="rounded-2xl border border-slate-200 p-4">
+      <h3 class="text-sm font-semibold text-primary">Business CTA</h3>
+      <label class="form-label block mt-4">
+        <span class="text-sm font-semibold text-primary">Title</span>
+        <input class="form-input" [(ngModel)]="closingCtas.business.title" name="closingBusinessTitle" />
+      </label>
+      <label class="form-label block mt-4">
+        <span class="text-sm font-semibold text-primary">Description</span>
+        <textarea class="form-input" rows="2" [(ngModel)]="closingCtas.business.description" name="closingBusinessDescription"></textarea>
+      </label>
+      <div class="mt-4 grid gap-3 md:grid-cols-3">
+        <label class="form-label">
+          <span class="text-sm font-semibold text-primary">CTA Label</span>
+          <input class="form-input" [(ngModel)]="closingCtas.business.cta.label" name="closingBusinessCtaLabel" />
+        </label>
+        <label class="form-label">
+          <span class="text-sm font-semibold text-primary">Router Link</span>
+          <input class="form-input" [(ngModel)]="closingCtas.business.cta.routerLink" name="closingBusinessCtaRoute" />
+        </label>
+        <label class="form-label">
+          <span class="text-sm font-semibold text-primary">External URL</span>
+          <input class="form-input" [(ngModel)]="closingCtas.business.cta.externalUrl" name="closingBusinessCtaUrl" />
+        </label>
+      </div>
+    </div>
+    <div class="rounded-2xl border border-slate-200 p-4">
+      <h3 class="text-sm font-semibold text-primary">Academy CTA</h3>
+      <label class="form-label block mt-4">
+        <span class="text-sm font-semibold text-primary">Title</span>
+        <input class="form-input" [(ngModel)]="closingCtas.academy.title" name="closingAcademyTitle" />
+      </label>
+      <label class="form-label block mt-4">
+        <span class="text-sm font-semibold text-primary">Description</span>
+        <textarea class="form-input" rows="2" [(ngModel)]="closingCtas.academy.description" name="closingAcademyDescription"></textarea>
+      </label>
+      <div class="mt-4 grid gap-3 md:grid-cols-3">
+        <label class="form-label">
+          <span class="text-sm font-semibold text-primary">CTA Label</span>
+          <input class="form-input" [(ngModel)]="closingCtas.academy.cta.label" name="closingAcademyCtaLabel" />
+        </label>
+        <label class="form-label">
+          <span class="text-sm font-semibold text-primary">Router Link</span>
+          <input class="form-input" [(ngModel)]="closingCtas.academy.cta.routerLink" name="closingAcademyCtaRoute" />
+        </label>
+        <label class="form-label">
+          <span class="text-sm font-semibold text-primary">External URL</span>
+          <input class="form-input" [(ngModel)]="closingCtas.academy.cta.externalUrl" name="closingAcademyCtaUrl" />
+        </label>
+      </div>
+    </div>
+  </div>
+</details>

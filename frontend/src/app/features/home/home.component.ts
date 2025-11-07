@@ -1,53 +1,43 @@
 import { CommonModule } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  QueryList,
-  ViewChildren,
-  computed,
-  inject,
-  signal
-} from '@angular/core';
-import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
-import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { SeoService } from '../../core/services/seo.service';
-import { AnimationService } from '../../core/services/animation.service';
-import { ContentService } from '../../core/services/content.service';
-import { RouterLink } from '@angular/router';
+import { HomeAcademySectionComponent } from './components/academy-section/home-academy-section.component';
+import { HomeClosingCtasSectionComponent } from './components/closing-ctas-section/home-closing-ctas-section.component';
+import { HomeContactSectionComponent } from './components/contact-section/home-contact-section.component';
+import { HomeDifferentiatorsSectionComponent } from './components/differentiators-section/home-differentiators-section.component';
+import { HomeGlobalPresenceSectionComponent } from './components/global-presence-section/home-global-presence-section.component';
+import { HomeHeroSectionComponent } from './components/hero-section/home-hero-section.component';
+import { HomeImpactSectionComponent } from './components/impact-section/home-impact-section.component';
+import { HomeMethodologySectionComponent } from './components/methodology-section/home-methodology-section.component';
+import { HomeServicesSectionComponent } from './components/services-section/home-services-section.component';
+import { HomeTestimonialsSectionComponent } from './components/testimonials-section/home-testimonials-section.component';
+import { HomeTrustSectionComponent } from './components/trust-section/home-trust-section.component';
+
+const HOME_IMPORTS = [
+  CommonModule,
+  HomeHeroSectionComponent,
+  HomeTrustSectionComponent,
+  HomeServicesSectionComponent,
+  HomeDifferentiatorsSectionComponent,
+  HomeMethodologySectionComponent,
+  HomeAcademySectionComponent,
+  HomeGlobalPresenceSectionComponent,
+  HomeTestimonialsSectionComponent,
+  HomeImpactSectionComponent,
+  HomeClosingCtasSectionComponent,
+  HomeContactSectionComponent
+];
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, SectionHeaderComponent, ScrollRevealDirective, RouterLink],
+  imports: HOME_IMPORTS,
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent {
   private readonly seo = inject(SeoService);
-  private readonly animation = inject(AnimationService);
-  private readonly content = inject(ContentService);
-
-  @ViewChildren('counter', { read: ElementRef })
-  private counters?: QueryList<ElementRef<HTMLElement>>;
-
-  protected readonly home = this.content.homeContent;
-  protected readonly heroVideoSrc = computed(() => this.normalizeMediaUrl(this.home().hero.video.src));
-  protected readonly heroVideoPoster = computed(() => this.normalizeMediaUrl(this.home().hero.video.poster));
-
-  protected readonly testimonialView = signal<'client' | 'student'>('client');
-
-  protected readonly filteredTestimonials = computed(() =>
-    this.home().testimonials.items.filter((testimonial) => testimonial.type === this.testimonialView())
-  );
-
-  protected readonly statsPool = computed(() => [
-    ...this.home().trust.stats,
-    ...this.home().academy.stats,
-    ...this.home().impact.stats
-  ]);
 
   constructor() {
     this.seo.update({
@@ -60,35 +50,4 @@ export class HomeComponent implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    queueMicrotask(() => {
-      const stats = this.statsPool();
-      this.counters?.forEach((counter, index) => {
-        const stat = stats[index];
-        if (!stat) {
-          return;
-        }
-        counter.nativeElement.setAttribute('data-suffix', stat.suffix ?? '');
-        if (stat.decimals != null) {
-          counter.nativeElement.setAttribute('data-decimals', String(stat.decimals));
-        }
-        this.animation.animateCounter(counter.nativeElement, stat.value);
-      });
-    });
-  }
-
-  protected setTestimonialView(view: 'client' | 'student'): void {
-    this.testimonialView.set(view);
-  }
-
-  private normalizeMediaUrl(url: string | null | undefined): string {
-    if (!url) {
-      return '';
-    }
-    if (/^(https?:)?\/\//.test(url) || url.startsWith('data:')) {
-      return url;
-    }
-    const normalized = url.startsWith('/') ? url : `/${url.replace(/^\/+/, '')}`;
-    return normalized.replace(/\/+$/, '');
-  }
 }

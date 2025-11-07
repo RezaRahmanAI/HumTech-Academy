@@ -7,7 +7,7 @@ import {
   ServiceCard,
   StatItem,
   Testimonial,
-} from '../models/home-content.model';
+} from '../models/home';
 import { ContentApiService } from './content-api.service';
 
 @Injectable({ providedIn: 'root' })
@@ -542,6 +542,23 @@ export class ContentService {
       this.persistHomeContent(next);
       this.pushContentToApi(next);
       return next;
+    });
+  }
+
+  updateHomeSection<K extends keyof HomeContent>(
+    key: K,
+    updater: (section: HomeContent[K]) => HomeContent[K]
+  ): void {
+    this.updateHomeContent((content) => {
+      content[key] = this.clone(updater(content[key]));
+      return content;
+    });
+  }
+
+  setHomeSection<K extends keyof HomeContent>(key: K, value: HomeContent[K]): void {
+    this.updateHomeContent((content) => {
+      content[key] = this.clone(value);
+      return content;
     });
   }
 

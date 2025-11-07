@@ -1,0 +1,61 @@
+<details
+  [id]="sectionId"
+  class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow"
+>
+  <summary class="cursor-pointer text-lg font-semibold text-primary">
+    Global Presence
+  </summary>
+  <div class="mt-6 space-y-6">
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Section Eyebrow</span>
+      <input class="form-input" [(ngModel)]="globalPresence.header.eyebrow" name="globalHeaderEyebrow" />
+    </label>
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Section Title</span>
+      <input class="form-input" [(ngModel)]="globalPresence.header.title" name="globalHeaderTitle" />
+    </label>
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Section Subtitle</span>
+      <textarea class="form-input" rows="2" [(ngModel)]="globalPresence.header.subtitle" name="globalHeaderSubtitle"></textarea>
+    </label>
+    <div class="grid gap-4 md:grid-cols-2">
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Headquarters Title</span>
+        <input class="form-input" [(ngModel)]="globalPresence.headquarters.title" name="globalHQTitle" />
+      </label>
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Headquarters Location</span>
+        <input class="form-input" [(ngModel)]="globalPresence.headquarters.location" name="globalHQLocation" />
+      </label>
+    </div>
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Headquarters Address</span>
+      <textarea class="form-input" rows="2" [(ngModel)]="globalPresence.headquarters.address" name="globalHQAddress"></textarea>
+    </label>
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Markets Served</span>
+      <textarea class="form-input" rows="2" [(ngModel)]="globalPresence.marketsServed" name="globalMarkets"></textarea>
+    </label>
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Specialized Verticals</span>
+      <textarea class="form-input" rows="2" [(ngModel)]="globalPresence.verticals" name="globalVerticals"></textarea>
+    </label>
+    <div class="rounded-2xl border border-slate-200 p-4">
+      <h3 class="text-sm font-semibold text-primary">Map Content</h3>
+      <div class="mt-4 grid gap-4 md:grid-cols-3">
+        <label class="form-label">
+          <span class="text-sm font-semibold text-primary">Map Title</span>
+          <input class="form-input" [(ngModel)]="globalPresence.map.title" name="globalMapTitle" />
+        </label>
+        <label class="form-label">
+          <span class="text-sm font-semibold text-primary">Map Description</span>
+          <textarea class="form-input" rows="2" [(ngModel)]="globalPresence.map.description" name="globalMapDescription"></textarea>
+        </label>
+        <label class="form-label">
+          <span class="text-sm font-semibold text-primary">Map Badge</span>
+          <input class="form-input" [(ngModel)]="globalPresence.map.badge" name="globalMapBadge" />
+        </label>
+      </div>
+    </div>
+  </div>
+</details>

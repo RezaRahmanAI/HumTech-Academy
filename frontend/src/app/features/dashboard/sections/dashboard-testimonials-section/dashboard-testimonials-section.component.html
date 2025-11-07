@@ -1,0 +1,71 @@
+<details
+  [id]="sectionId"
+  class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow"
+>
+  <summary class="cursor-pointer text-lg font-semibold text-primary">
+    Testimonials
+  </summary>
+  <div class="mt-6 space-y-6">
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Section Eyebrow</span>
+      <input class="form-input" [(ngModel)]="testimonials.header.eyebrow" name="testimonialHeaderEyebrow" />
+    </label>
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Section Title</span>
+      <input class="form-input" [(ngModel)]="testimonials.header.title" name="testimonialHeaderTitle" />
+    </label>
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Section Subtitle</span>
+      <textarea class="form-input" rows="2" [(ngModel)]="testimonials.header.subtitle" name="testimonialHeaderSubtitle"></textarea>
+    </label>
+    <div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-primary">Testimonials</h3>
+        <button type="button" class="text-sm font-semibold text-primary" (click)="addTestimonial()">
+          Add testimonial
+        </button>
+      </div>
+      <div class="mt-4 space-y-4">
+        <div *ngFor="let testimonial of testimonials.items; let i = index" class="rounded-2xl border border-slate-200 p-4">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-semibold text-primary">Testimonial {{ i + 1 }}</h4>
+            <button type="button" class="text-xs text-red-500" (click)="removeTestimonial(i)">
+              Remove testimonial
+            </button>
+          </div>
+          <label class="form-label block mt-4">
+            <span class="text-sm font-semibold text-primary">Quote</span>
+            <textarea class="form-input" rows="2" [(ngModel)]="testimonial.quote" [name]="'testimonialQuote' + i"></textarea>
+          </label>
+          <div class="mt-4 grid gap-4 md:grid-cols-2">
+            <label class="form-label">
+              <span class="text-sm font-semibold text-primary">Name</span>
+              <input class="form-input" [(ngModel)]="testimonial.name" [name]="'testimonialName' + i" />
+            </label>
+            <label class="form-label">
+              <span class="text-sm font-semibold text-primary">Title</span>
+              <input class="form-input" [(ngModel)]="testimonial.title" [name]="'testimonialTitle' + i" />
+            </label>
+          </div>
+          <div class="mt-4 grid gap-4 md:grid-cols-2">
+            <label class="form-label">
+              <span class="text-sm font-semibold text-primary">Location</span>
+              <input class="form-input" [(ngModel)]="testimonial.location" [name]="'testimonialLocation' + i" />
+            </label>
+            <label class="form-label">
+              <span class="text-sm font-semibold text-primary">Rating</span>
+              <input class="form-input" type="number" min="1" max="5" [(ngModel)]="testimonial.rating" [name]="'testimonialRating' + i" />
+            </label>
+          </div>
+          <label class="form-label block mt-4">
+            <span class="text-sm font-semibold text-primary">Type</span>
+            <select class="form-input" [(ngModel)]="testimonial.type" [name]="'testimonialType' + i">
+              <option value="client">Client</option>
+              <option value="student">Student</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</details>

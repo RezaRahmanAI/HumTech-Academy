@@ -1,0 +1,49 @@
+<details
+  [id]="sectionId"
+  class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow"
+>
+  <summary class="cursor-pointer text-lg font-semibold text-primary">
+    Trust & Stats
+  </summary>
+  <div class="mt-6 space-y-6">
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Tagline</span>
+      <input class="form-input" [(ngModel)]="trust.tagline" name="trustTagline" />
+    </label>
+    <div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-primary">Companies</h3>
+        <button type="button" class="text-sm font-semibold text-primary" (click)="addCompany()">
+          Add company
+        </button>
+      </div>
+      <div class="mt-3 space-y-3">
+        <div *ngFor="let company of trust.companies; let i = index" class="flex items-center gap-3">
+          <input class="form-input flex-1" [(ngModel)]="trust.companies[i]" [name]="'trustCompany' + i" />
+          <button type="button" class="text-xs text-red-500" (click)="removeCompany(i)">
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-primary">Stats</h3>
+        <button type="button" class="text-sm font-semibold text-primary" (click)="addStat()">
+          Add stat
+        </button>
+      </div>
+      <div class="mt-3 space-y-3">
+        <div *ngFor="let stat of trust.stats; let i = index" class="grid gap-3 md:grid-cols-4">
+          <input class="form-input" [(ngModel)]="stat.label" [name]="'trustStatLabel' + i" placeholder="Label" />
+          <input class="form-input" type="number" [(ngModel)]="stat.value" [name]="'trustStatValue' + i" placeholder="Value" />
+          <input class="form-input" [(ngModel)]="stat.suffix" [name]="'trustStatSuffix' + i" placeholder="Suffix" />
+          <input class="form-input" type="number" [(ngModel)]="stat.decimals" [name]="'trustStatDecimals' + i" placeholder="Decimals" />
+          <button type="button" class="text-xs text-red-500 md:col-span-4 md:text-right" (click)="removeStat(i)">
+            Remove stat
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</details>

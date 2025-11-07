@@ -1,0 +1,61 @@
+<details id="closing-ctas" open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+  <summary class="cursor-pointer text-lg font-semibold text-primary">
+    Closing CTAs
+  </summary>
+  <div class="mt-6 grid gap-6 md:grid-cols-2">
+    <div class="rounded-2xl border border-slate-200 p-4">
+      <h3 class="text-sm font-semibold text-primary">Business CTA</h3>
+      <label class="form-label block mt-3">
+        <span class="text-xs font-semibold text-primary uppercase">Title</span>
+        <input class="form-input" [(ngModel)]="closingCtas.business.title" name="ctaBusinessTitle" />
+      </label>
+      <label class="form-label block mt-3">
+        <span class="text-xs font-semibold text-primary uppercase">Description</span>
+        <textarea class="form-input" rows="2" [(ngModel)]="closingCtas.business.description" name="ctaBusinessDescription"></textarea>
+      </label>
+      <label class="form-label block mt-3">
+        <span class="text-xs font-semibold text-primary uppercase">CTA Label</span>
+        <input class="form-input" [(ngModel)]="closingCtas.business.cta.label" name="ctaBusinessLabel" />
+      </label>
+      <label class="form-label block mt-3">
+        <span class="text-xs font-semibold text-primary uppercase">Router Link</span>
+        <input class="form-input" [(ngModel)]="closingCtas.business.cta.routerLink" name="ctaBusinessLink" />
+      </label>
+      <label class="form-label block mt-3">
+        <span class="text-xs font-semibold text-primary uppercase">Fragment</span>
+        <input class="form-input" [(ngModel)]="closingCtas.business.cta.fragment" name="ctaBusinessFragment" />
+      </label>
+      <label class="form-label block mt-3">
+        <span class="text-xs font-semibold text-primary uppercase">External URL</span>
+        <input class="form-input" [(ngModel)]="closingCtas.business.cta.externalUrl" name="ctaBusinessExternal" />
+      </label>
+    </div>
+    <div class="rounded-2xl border border-slate-200 p-4">
+      <h3 class="text-sm font-semibold text-primary">Academy CTA</h3>
+      <label class="form-label block mt-3">
+        <span class="text-xs font-semibold text-primary uppercase">Title</span>
+        <input class="form-input" [(ngModel)]="closingCtas.academy.title" name="ctaAcademyTitle" />
+      </label>
+      <label class="form-label block mt-3">
+        <span class="text-xs font-semibold text-primary uppercase">Description</span>
+        <textarea class="form-input" rows="2" [(ngModel)]="closingCtas.academy.description" name="ctaAcademyDescription"></textarea>
+      </label>
+      <label class="form-label block mt-3">
+        <span class="text-xs font-semibold text-primary uppercase">CTA Label</span>
+        <input class="form-input" [(ngModel)]="closingCtas.academy.cta.label" name="ctaAcademyLabel" />
+      </label>
+      <label class="form-label block mt-3">
+        <span class="text-xs font-semibold text-primary uppercase">Router Link</span>
+        <input class="form-input" [(ngModel)]="closingCtas.academy.cta.routerLink" name="ctaAcademyLink" />
+      </label>
+      <label class="form-label block mt-3">
+        <span class="text-xs font-semibold text-primary uppercase">Fragment</span>
+        <input class="form-input" [(ngModel)]="closingCtas.academy.cta.fragment" name="ctaAcademyFragment" />
+      </label>
+      <label class="form-label block mt-3">
+        <span class="text-xs font-semibold text-primary uppercase">External URL</span>
+        <input class="form-input" [(ngModel)]="closingCtas.academy.cta.externalUrl" name="ctaAcademyExternal" />
+      </label>
+    </div>
+  </div>
+</details>

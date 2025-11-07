@@ -7,11 +7,11 @@ import {
   ServiceCard,
   StatItem,
   Testimonial,
-} from '../models/home-content.model';
+} from '../models/home';
 import { ContentApiService } from './content-api.service';
 
 @Injectable({ providedIn: 'root' })
-export class ContentService {
+export class HomeContentStore {
   private readonly storageKey = 'hum-tech-academy-home-content';
   private readonly api = inject(ContentApiService);
 
@@ -532,6 +532,16 @@ export class ContentService {
     this._homeContent.set(next);
     this.persistHomeContent(next);
     this.pushContentToApi(next);
+  }
+
+  updateSection<K extends keyof HomeContent>(section: K, value: HomeContent[K]): void {
+    const nextValue = this.clone(value);
+    this._homeContent.update((current) => {
+      const updated = this.clone({ ...current, [section]: nextValue });
+      this.persistHomeContent(updated);
+      this.pushContentToApi(updated);
+      return updated;
+    });
   }
 
   updateHomeContent(mutator: (content: HomeContent) => HomeContent): void {

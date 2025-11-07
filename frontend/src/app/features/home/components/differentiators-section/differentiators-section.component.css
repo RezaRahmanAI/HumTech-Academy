@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.gradient-border {
+  padding: 2px;
+  border-radius: 32px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(16, 185, 129, 0.3));
+}
+
+.gradient-border > * {
+  border-radius: 30px;
+}

@@ -1,0 +1,16 @@
+<section class="section-padding">
+  <div class="container-wide">
+    <app-section-header
+      [eyebrow]="impact.header.eyebrow"
+      [title]="impact.header.title"
+      [subtitle]="impact.header.subtitle"
+      [align]="impact.header.align ?? 'center'"
+    ></app-section-header>
+    <div class="mt-12 grid gap-6 md:grid-cols-4" appScrollReveal [appScrollReveal]="{ stagger: 0.12 }">
+      <div *ngFor="let stat of impact.stats" class="rounded-3xl border border-slate-100 bg-white p-6 text-center shadow-sm">
+        <span #counter class="text-3xl font-semibold text-primary">0</span>
+        <p class="mt-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">{{ stat.label }}</p>
+      </div>
+    </div>
+  </div>
+</section>

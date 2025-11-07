@@ -1,0 +1,75 @@
+<details id="services" open class="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-glow">
+  <summary class="cursor-pointer text-lg font-semibold text-primary">Services</summary>
+  <div class="mt-6 space-y-6">
+    <div class="grid gap-4 md:grid-cols-3">
+      <label class="form-label">
+        <span class="text-sm font-semibold text-primary">Eyebrow</span>
+        <input class="form-input" [(ngModel)]="services.header.eyebrow" name="servicesEyebrow" />
+      </label>
+      <label class="form-label md:col-span-2">
+        <span class="text-sm font-semibold text-primary">Title</span>
+        <input class="form-input" [(ngModel)]="services.header.title" name="servicesTitle" />
+      </label>
+    </div>
+    <label class="form-label block">
+      <span class="text-sm font-semibold text-primary">Subtitle</span>
+      <textarea class="form-input" rows="2" [(ngModel)]="services.header.subtitle" name="servicesSubtitle"></textarea>
+    </label>
+    <div>
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-primary">Service Cards</h3>
+        <button type="button" class="text-sm font-semibold text-primary" (click)="addService()">
+          Add service
+        </button>
+      </div>
+      <div class="mt-3 space-y-6">
+        <div *ngFor="let service of services.items; let i = index" class="rounded-2xl border border-slate-200 p-4">
+          <div class="grid gap-3 md:grid-cols-4">
+            <label class="form-label">
+              <span class="text-xs font-semibold text-primary uppercase">Title</span>
+              <input class="form-input" [(ngModel)]="service.title" [name]="'serviceTitle' + i" />
+            </label>
+            <label class="form-label">
+              <span class="text-xs font-semibold text-primary uppercase">Icon</span>
+              <input class="form-input" [(ngModel)]="service.icon" [name]="'serviceIcon' + i" />
+            </label>
+            <label class="form-label">
+              <span class="text-xs font-semibold text-primary uppercase">Tagline</span>
+              <input class="form-input" [(ngModel)]="service.tagline" [name]="'serviceTagline' + i" />
+            </label>
+            <label class="form-label">
+              <span class="text-xs font-semibold text-primary uppercase">Featured</span>
+              <select class="form-input" [(ngModel)]="service.featured" [name]="'serviceFeatured' + i">
+                <option [ngValue]="true">Yes</option>
+                <option [ngValue]="false">No</option>
+              </select>
+            </label>
+          </div>
+          <label class="form-label block mt-3">
+            <span class="text-xs font-semibold text-primary uppercase">Description</span>
+            <textarea class="form-input" rows="2" [(ngModel)]="service.description" [name]="'serviceDescription' + i"></textarea>
+          </label>
+          <div class="mt-3">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-semibold uppercase text-primary">Highlights</h4>
+              <button type="button" class="text-xs font-semibold text-primary" (click)="addHighlight(service)">
+                Add highlight
+              </button>
+            </div>
+            <div class="mt-2 space-y-2">
+              <div *ngFor="let highlight of service.highlights; let j = index" class="flex items-center gap-3">
+                <input class="form-input flex-1" [(ngModel)]="service.highlights[j]" [name]="'serviceHighlight' + i + '-' + j" />
+                <button type="button" class="text-xs text-red-500" (click)="removeHighlight(service, j)">
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="mt-3 text-xs text-red-500" (click)="removeService(i)">
+            Remove service
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</details>

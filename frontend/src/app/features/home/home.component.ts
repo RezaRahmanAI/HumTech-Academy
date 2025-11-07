@@ -1,53 +1,74 @@
-import { CommonModule } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  QueryList,
-  ViewChildren,
-  computed,
-  inject,
-  signal
-} from '@angular/core';
-import { SectionHeaderComponent } from '../../shared/components/section-header/section-header.component';
-import { ScrollRevealDirective } from '../../shared/directives/scroll-reveal.directive';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+
 import { SeoService } from '../../core/services/seo.service';
-import { AnimationService } from '../../core/services/animation.service';
-import { ContentService } from '../../core/services/content.service';
-import { RouterLink } from '@angular/router';
+import { AcademySectionComponent } from './components/academy-section/academy-section.component';
+import { ClosingCtasSectionComponent } from './components/closing-ctas-section/closing-ctas-section.component';
+import { ContactSectionComponent } from './components/contact-section/contact-section.component';
+import { DifferentiatorsSectionComponent } from './components/differentiators-section/differentiators-section.component';
+import { GlobalPresenceSectionComponent } from './components/global-presence-section/global-presence-section.component';
+import { HeroSectionComponent } from './components/hero-section/hero-section.component';
+import { ImpactSectionComponent } from './components/impact-section/impact-section.component';
+import { MethodologySectionComponent } from './components/methodology-section/methodology-section.component';
+import { ServicesSectionComponent } from './components/services-section/services-section.component';
+import { TestimonialsSectionComponent } from './components/testimonials-section/testimonials-section.component';
+import { TrustSectionComponent } from './components/trust-section/trust-section.component';
+import { HomeAcademyService } from './services/home-academy.service';
+import { HomeClosingCtasService } from './services/home-closing-ctas.service';
+import { HomeContactService } from './services/home-contact.service';
+import { HomeDifferentiatorsService } from './services/home-differentiators.service';
+import { HomeGlobalPresenceService } from './services/home-global-presence.service';
+import { HomeHeroService } from './services/home-hero.service';
+import { HomeImpactService } from './services/home-impact.service';
+import { HomeMethodologyService } from './services/home-methodology.service';
+import { HomeServicesService } from './services/home-services.service';
+import { HomeTestimonialsService } from './services/home-testimonials.service';
+import { HomeTrustService } from './services/home-trust.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, SectionHeaderComponent, ScrollRevealDirective, RouterLink],
+  imports: [
+    HeroSectionComponent,
+    TrustSectionComponent,
+    ServicesSectionComponent,
+    DifferentiatorsSectionComponent,
+    MethodologySectionComponent,
+    AcademySectionComponent,
+    GlobalPresenceSectionComponent,
+    TestimonialsSectionComponent,
+    ImpactSectionComponent,
+    ClosingCtasSectionComponent,
+    ContactSectionComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent {
   private readonly seo = inject(SeoService);
-  private readonly animation = inject(AnimationService);
-  private readonly content = inject(ContentService);
+  private readonly heroService = inject(HomeHeroService);
+  private readonly trustService = inject(HomeTrustService);
+  private readonly servicesService = inject(HomeServicesService);
+  private readonly differentiatorsService = inject(HomeDifferentiatorsService);
+  private readonly methodologyService = inject(HomeMethodologyService);
+  private readonly academyService = inject(HomeAcademyService);
+  private readonly globalPresenceService = inject(HomeGlobalPresenceService);
+  private readonly testimonialsService = inject(HomeTestimonialsService);
+  private readonly impactService = inject(HomeImpactService);
+  private readonly closingCtasService = inject(HomeClosingCtasService);
+  private readonly contactService = inject(HomeContactService);
 
-  @ViewChildren('counter', { read: ElementRef })
-  private counters?: QueryList<ElementRef<HTMLElement>>;
-
-  protected readonly home = this.content.homeContent;
-  protected readonly heroVideoSrc = computed(() => this.normalizeMediaUrl(this.home().hero.video.src));
-  protected readonly heroVideoPoster = computed(() => this.normalizeMediaUrl(this.home().hero.video.poster));
-
-  protected readonly testimonialView = signal<'client' | 'student'>('client');
-
-  protected readonly filteredTestimonials = computed(() =>
-    this.home().testimonials.items.filter((testimonial) => testimonial.type === this.testimonialView())
-  );
-
-  protected readonly statsPool = computed(() => [
-    ...this.home().trust.stats,
-    ...this.home().academy.stats,
-    ...this.home().impact.stats
-  ]);
+  protected readonly hero = this.heroService.hero;
+  protected readonly trust = this.trustService.trust;
+  protected readonly services = this.servicesService.services;
+  protected readonly differentiators = this.differentiatorsService.differentiators;
+  protected readonly methodology = this.methodologyService.methodology;
+  protected readonly academy = this.academyService.academy;
+  protected readonly globalPresence = this.globalPresenceService.globalPresence;
+  protected readonly testimonials = this.testimonialsService.testimonials;
+  protected readonly impact = this.impactService.impact;
+  protected readonly closingCtas = this.closingCtasService.closingCtas;
+  protected readonly contact = this.contactService.contact;
 
   constructor() {
     this.seo.update({
@@ -56,39 +77,7 @@ export class HomeComponent implements AfterViewInit {
         'Premium multinational technology company delivering digital marketing, software development, website building, and live tech education for Bangladesh and global markets.',
       keywords:
         'hum tech academy, digital marketing Bangladesh, software development Dhaka, web development, tech courses, lenis gsap',
-      canonical: 'https://www.humtech.academy'
+      canonical: 'https://www.humtech.academy',
     });
-  }
-
-  ngAfterViewInit(): void {
-    queueMicrotask(() => {
-      const stats = this.statsPool();
-      this.counters?.forEach((counter, index) => {
-        const stat = stats[index];
-        if (!stat) {
-          return;
-        }
-        counter.nativeElement.setAttribute('data-suffix', stat.suffix ?? '');
-        if (stat.decimals != null) {
-          counter.nativeElement.setAttribute('data-decimals', String(stat.decimals));
-        }
-        this.animation.animateCounter(counter.nativeElement, stat.value);
-      });
-    });
-  }
-
-  protected setTestimonialView(view: 'client' | 'student'): void {
-    this.testimonialView.set(view);
-  }
-
-  private normalizeMediaUrl(url: string | null | undefined): string {
-    if (!url) {
-      return '';
-    }
-    if (/^(https?:)?\/\//.test(url) || url.startsWith('data:')) {
-      return url;
-    }
-    const normalized = url.startsWith('/') ? url : `/${url.replace(/^\/+/, '')}`;
-    return normalized.replace(/\/+$/, '');
   }
 }

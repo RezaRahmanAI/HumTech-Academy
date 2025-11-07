@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { HomeContent } from '../models/home-content.model';
+import { HomeContent } from '../models/home';
 
 @Injectable({ providedIn: 'root' })
 export class ContentApiService {
